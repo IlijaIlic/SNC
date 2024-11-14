@@ -44,15 +44,15 @@ function LoginPage() {
   };
 
   return (
-    <div className="flex w-full flex-row flex-wrap-reverse items-center justify-center">
+    <div className="flex w-full flex-row flex-wrap-reverse items-center justify-center pt-20">
       <div className="m-6 mx-10 items-center self-center text-center">
         <Link to="/" className="hover:text-snclbrown">
           <p className="text-5xl font-extrabold">Svadba Na Click</p>
           <p className="my-3 text-center font-thin">{t('organizeWedding')}</p>
         </Link>
       </div>
-      <form onSubmit={formSubmitHandler} className="m-6 mx-10 grid h-fit min-w-96 max-w-96 rounded-xl bg-snclbrown p-6 text-white shadow-lg">
-        <p className="text-xl font-extrabold text-snclgray">{t('login')}</p>
+      <form onSubmit={formSubmitHandler} className="m-6 mx-10 grid h-fit min-w-96 max-w-96 rounded-xl bg-gradient-to-bl from-snclpink to-sncgradientpink p-6 text-white shadow-lg">
+        <p className="text-xl font-extrabold text-white">{t('login')}</p>
         <div className="mt-5">
           <div className="mb-3">
             <p>E-mail</p>
@@ -86,7 +86,7 @@ function LoginPage() {
         </div>
         {error && <p className="text-red">{t('Greska u prijavljivanju!')}</p>}
         <div className="mt-20 flex justify-end">
-          <button type="submit" className="my-6 h-10 w-1/3  rounded-lg bg-sncpink shadow-lg hover:bg-snclpink">
+          <button type="submit" className="my-6 h-10 w-1/3  rounded-lg bg-sncpink shadow-lg hover:animate-pop hover:bg-snclpink">
             {t('login')}
           </button>
         </div>

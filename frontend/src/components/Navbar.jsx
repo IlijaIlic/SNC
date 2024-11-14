@@ -19,8 +19,8 @@ function Navbar() {
     setisOpen(!isOpen);
   };
   return (
-    <div className="position:fixed flex h-fit w-full flex-wrap justify-between bg-sncpink px-10 pb-2 pt-1 text-white">
-      <Link className="text-xl font-extrabold hover:text-snclbrown" to="/">Svadba Na Click</Link>
+    <div className="fixed top-0 z-50 flex h-fit w-full flex-row flex-wrap items-center justify-between border-b-2 border-sncpink bg-white px-40 py-5 text-sncpink shadow-md">
+      <Link className="text-center font-sncFont4 text-3xl font-extralight hover:text-snclbrown" to="/">Svadba Na Click</Link>
       <div className="pt-1">
         <div className="hidden md:flex">
           <Links1 />
@@ -89,12 +89,12 @@ function Links1() {
       {isLoggedIn === false
         ? (
           <div>
-            <Link className="ml-2 rounded-bl-lg bg-snclpink p-1 px-3 text-sncdblue shadow-lg hover:text-sncpink" to="/login">{t('login')}</Link>
-            <Link className="mr-2 rounded-tr-lg bg-snclblue p-1 px-3 text-white shadow-lg hover:text-snclbrown" to="/register">{t('register')}</Link>
+            <Link className="ml-2 rounded-bl-lg bg-snclpink p-1 px-3 text-white shadow-lg hover:text-sncpink" to="/login">{t('login')}</Link>
+            <Link className="mr-2 rounded-tr-lg bg-sncpink p-1 px-3 text-white shadow-lg hover:text-snclpink" to="/register">{t('register')}</Link>
           </div>
         )
         : (
-          <Button className="ml-2 rounded-lg bg-snclblue  px-3 text-white shadow-lg hover:text-snclbrown" onClick={handleProfile}>
+          <Button className="ml-2 rounded-lg bg-snclpink  px-3 text-white shadow-lg hover:text-snclbrown" onClick={handleProfile}>
             {' '}
             {t('myProfile')}
             {' '}

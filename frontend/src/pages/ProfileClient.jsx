@@ -533,8 +533,8 @@ function ProfileClient() {
   );
 
   return (
-    <Tabs defaultValue={1} className="m-3 flex h-full w-full flex-col justify-center">
-      <TabsList className="mx-2 mb-2 flex h-fit flex-row justify-around  rounded-lg bg-snclblue p-4">
+    <Tabs defaultValue={1} className="m-3 flex h-full w-full flex-col justify-center  pt-20">
+      <TabsList className="mx-2 mb-2 flex h-fit flex-row justify-around  rounded-lg bg-sncpink p-4">
         <Tab value={1} className="text-white hover:text-sncdbrown">{t('myProfile')}</Tab>
         <Tab value={2} className="text-white hover:text-sncdbrown">{t('wedding')}</Tab>
         <Tab value={3} className="text-white hover:text-sncdbrown">{t('saved')}</Tab>
@@ -542,18 +542,18 @@ function ProfileClient() {
       </TabsList>
       <TabPanel value={1} className="flex h-fit">
         {' '}
-        <div className=" mx-2 flex w-full flex-col items-center justify-center rounded-md bg-snclbrown p-5 shadow-lg">
+        <div className=" mx-2 flex w-full flex-col items-center justify-center rounded-md bg-gradient-to-bl from-snclpink to-sncgradientpink p-5 shadow-lg">
           {changing ? changingDiv() : overviewDiv()}
           <div className="flex flex-row gap-2">
-            <Button onClick={handleLogout} className="rounded-md bg-snclblue p-2 text-white shadow-md hover:bg-sncdblue">{t('logout')}</Button>
-            <Button onClick={handleChange} className="rounded-md bg-snclblue p-2 text-white shadow-md hover:bg-sncdblue">{changing ? 'Sacuvaj' : 'Izmeni'}</Button>
+            <Button onClick={handleLogout} className="rounded-md bg-sncpink p-2 text-white shadow-md hover:animate-pop hover:bg-sncgradientpink">{t('logout')}</Button>
+            <Button onClick={handleChange} className="  rounded-md bg-sncpink p-2 text-white shadow-md hover:animate-pop hover:bg-sncgradientpink">{changing ? 'Sacuvaj' : 'Izmeni'}</Button>
           </div>
         </div>
       </TabPanel>
       <TabPanel value={2}>
         {' '}
-        <div className=" flex w-full flex-col gap-3 rounded-md bg-snclbrown p-5 shadow-lg">
-          <div className="w-full rounded-lg bg-snclblue p-3 text-white shadow-lg">
+        <div className=" flex w-full flex-col gap-3 rounded-md bg-snclpink p-5 shadow-lg">
+          <div className="w-full rounded-lg bg-sncpink p-3 text-white shadow-lg">
             <div className="flex flex-row items-center gap-3">
               <p className="text-lg font-bold">{t('RESTORAN')}</p>
               <RestaurantIcon />
@@ -592,11 +592,11 @@ function ProfileClient() {
 
               />
               {ocenaRestoran}
-              <Button onClick={handleOceniRestoran} disabled={nazivRestorana === ''} className={nazivRestorana === '' ? 'rounded-lg bg-sncdbrown p-2 text-sncdblue shadow-md ' : 'rounded-lg bg-snclbrown p-2 text-sncdblue shadow-md hover:bg-sncdbrown'}>{t('Oceni Restoran')}</Button>
+              <Button onClick={handleOceniRestoran} disabled={nazivRestorana === ''} className={nazivRestorana === '' ? 'rounded-lg bg-sncdbrown p-2 text-gray-600 shadow-md ' : 'rounded-lg bg-sncgradientpink p-2 text-white shadow-md hover:bg-snclpink '}>{t('Oceni Restoran')}</Button>
             </div>
 
           </div>
-          <div className="w-full rounded-lg bg-snclblue p-3 text-white shadow-lg">
+          <div className="w-full rounded-lg bg-sncpink p-3 text-white shadow-lg">
             <div className="flex flex-row items-center gap-3">
               <p className="text-lg font-bold">{t('POSLASTICAR')}</p>
               <CakeIcon />
@@ -625,11 +625,11 @@ function ProfileClient() {
                 disabled={nazivPoslasticara === ''}
               />
               {ocenaPoslasticara}
-              <Button onClick={handleOceniPoslasticara} disabled={nazivPoslasticara === ''} className={nazivPoslasticara === '' ? 'rounded-lg bg-sncdbrown p-2 text-sncdblue shadow-md ' : 'rounded-lg bg-snclbrown p-2 text-sncdblue shadow-md hover:bg-sncdbrown'}>{t('Oceni poslasticara')}</Button>
+              <Button onClick={handleOceniPoslasticara} disabled={nazivPoslasticara === ''} className={nazivPoslasticara === '' ? 'rounded-lg bg-sncdbrown p-2 text-gray-600 shadow-md ' : 'rounded-lg bg-sncgradientpink p-2 text-white shadow-md hover:bg-snclpink '}>{t('Oceni poslasticara')}</Button>
             </div>
 
           </div>
-          <div className="w-full rounded-lg bg-snclblue p-3 text-white shadow-lg">
+          <div className="w-full rounded-lg bg-sncpink p-3 text-white shadow-lg">
             <div className="flex flex-row items-center gap-3">
               <p className="text-lg font-bold">{t('FOTOGRAF')}</p>
               <CameraAltIcon />
@@ -655,11 +655,11 @@ function ProfileClient() {
 
               />
               {ocenaFotografa}
-              <Button onClick={handleOceniFotografa} disabled={nazivFotografa === ''} className={nazivFotografa === '' ? 'rounded-lg bg-sncdbrown p-2 text-sncdblue shadow-md ' : 'rounded-lg bg-snclbrown p-2 text-sncdblue shadow-md hover:bg-sncdbrown'}>{t('Oceni fotografa')}</Button>
+              <Button onClick={handleOceniFotografa} disabled={nazivFotografa === ''} className={nazivFotografa === '' ? 'rounded-lg bg-sncdbrown p-2 text-gray-600 shadow-md ' : 'rounded-lg bg-sncgradientpink p-2 text-white shadow-md hover:bg-snclpink '}>{t('Oceni fotografa')}</Button>
             </div>
 
           </div>
-          <div className="w-full rounded-lg bg-snclblue p-3 text-white shadow-lg">
+          <div className="w-full rounded-lg bg-sncpink p-3 text-white shadow-lg">
             <div className="flex flex-row items-center gap-3">
               <p className="text-lg font-bold">{t('DEKORATER')}</p>
               <CelebrationIcon />
@@ -684,7 +684,7 @@ function ProfileClient() {
                 disabled={nazivDekoratera === ''}
               />
               {ocenaDekorater}
-              <Button onClick={handleOceniDekoratera} disabled={nazivDekoratera === ''} className={nazivDekoratera === '' ? 'rounded-lg bg-sncdbrown p-2 text-sncdblue shadow-md ' : 'rounded-lg bg-snclbrown p-2 text-sncdblue shadow-md hover:bg-sncdbrown'}>{t('Oceni dekoratera')}</Button>
+              <Button onClick={handleOceniDekoratera} disabled={nazivDekoratera === ''} className={nazivDekoratera === '' ? 'rounded-lg bg-sncdbrown p-2 text-gray-600 shadow-md ' : 'rounded-lg bg-sncgradientpink p-2 text-white shadow-md hover:bg-snclpink '}>{t('Oceni dekoratera')}</Button>
             </div>
           </div>
 
@@ -692,7 +692,7 @@ function ProfileClient() {
       </TabPanel>
       <TabPanel value={3}>
         {' '}
-        <div className=" flex w-full flex-col rounded-md bg-snclbrown p-5 shadow-lg">
+        <div className=" flex w-full flex-col rounded-md bg-snclpink p-5 shadow-lg">
           <p className="mb-3 text-2xl font-bold text-white">{t('savedServices')}</p>
 
           <div className="flex w-full flex-row  flex-wrap items-center justify-center ">
@@ -808,7 +808,7 @@ function ProfileClient() {
       <TabPanel value={4}>
         {' '}
 
-        <div className="flex flex-col rounded-md bg-snclbrown p-5 shadow-lg">
+        <div className="flex flex-col rounded-md bg-snclpink p-5 shadow-lg">
           <div className=" flex w-full flex-row justify-center gap-3 ">
             <input type="text" placeholder={t('guestName')} value={imeGosta} onChange={(e) => setImeGosta(e.target.value)} className="h-8 w-32  rounded-lg bg-white p-1 text-sncdblue shadow-lg outline-none hover:ring-1 hover:ring-snclblue focus:ring-2 focus:ring-snclblue" />
             <input type="text" placeholder={t('guestSurname')} value={prezimeGosta} onChange={(e) => setPrezimeGosta(e.target.value)} className="h-8 w-32  rounded-lg bg-white p-1 text-sncdblue shadow-lg outline-none hover:ring-1 hover:ring-snclblue focus:ring-2 focus:ring-snclblue" />

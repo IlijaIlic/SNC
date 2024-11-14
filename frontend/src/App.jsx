@@ -99,7 +99,7 @@ function App() {
   }, [user, userType]);
 
   return (
-    <div className=" flex min-h-screen flex-col font-sncFont2">
+    <div className=" flex min-h-screen flex-col font-sncFont5">
       <Navbar />
       <div className="flex flex-1">
         <Routes>
@@ -130,8 +130,8 @@ function App() {
           <Route path="/register/poslasticar" element={user ? <Navigate to="/" /> : <RegisterPoslasticarPage />} />
           <Route path="/register/dekorater" element={user ? <Navigate to="/" /> : <RegisterDekoraterPage />} />
 
-           <Route path="/admin/clients" element={user && userType === 'Admin' ? <RegisterFotografPage /> : <Navigate to="/" />} />
-          <Route path="/admin/ads" element={user && userType === 'Admin' ? <OglasiOvervew /> : <Navigate to="/" />} /> 
+          <Route path="/admin/clients" element={user && userType === 'Admin' ? <RegisterFotografPage /> : <Navigate to="/" />} />
+          <Route path="/admin/ads" element={user && userType === 'Admin' ? <OglasiOvervew /> : <Navigate to="/" />} />
           {/* <Route path="/admin/clients" element={<ClientsOverview />} />
           <Route path="/admin/ads" element={<OglasiOvervew />} /> */}
           {/* <Route path="/admin/clients" element={user  === 'Admin' ? <ClientsOverview /> : <Navigate to="/" />} />

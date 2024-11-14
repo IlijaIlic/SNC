@@ -11,6 +11,9 @@ module.exports = withMT({
     fontFamily: {
       sncFont1: ['Lato'],
       sncFont2: ['Barlow'],
+      sncFont3: ['Lobster'],
+      sncFont4: ['Modak'],
+      sncFont5: ['Hubot Sans'],
     },
     colors: {
       transparent: 'transparent',
@@ -32,8 +35,18 @@ module.exports = withMT({
       'snclblue': '#1F4172',
       'snclgray': '#35393C',
       'sncdbrown': '#B39986',
+      'sncgradientpink': '#F5A0A9',
     },
-    extend: {},
+    extend: {
+      animation: {
+        pop: 'pop 0.3s ease-in-out forwards',
+      },
+      keyframes: {
+        pop: {
+          '100%': { transform: 'scale(1.05)' },
+        },
+      },
+    },
   },
   plugins: [],
 });

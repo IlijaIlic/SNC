@@ -7,8 +7,8 @@ function ContactPage() {
   const { t } = useTranslation();
 
   return (
-    <div className="flex w-full flex-col items-center text-center">
-      <div className="flex h-1/2 w-full flex-col items-center justify-center bg-snclbrown">
+    <div className="flex w-full flex-col items-center pt-16 text-center">
+      <div className="flex h-1/2 w-full flex-col items-center justify-center bg-gradient-to-t from-sncgradientpink to-sncpink">
         <p className="text-3xl font-bold text-white">
           {t('contact')}
         </p>

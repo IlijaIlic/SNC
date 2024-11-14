@@ -5,8 +5,8 @@ import { useTranslation } from 'react-i18next';
 function AboutPage() {
   const { t } = useTranslation();
   return (
-    <div className="m-3 flex flex-col justify-around gap-10 text-justify ">
-      <div className="rounded-lg bg-snclbrown p-10 text-snclgray shadow-lg">
+    <div className="m-3 flex flex-col justify-around gap-10 pt-20 text-justify">
+      <div className="rounded-lg bg-gradient-to-tl from-sncgradientpink to-sncpink p-10 text-white shadow-lg">
         <p className="text-2xl font-extrabold">
           {t('about')}
           ...
@@ -15,7 +15,7 @@ function AboutPage() {
           {t('aboutText')}
         </p>
       </div>
-      <div className="rounded-lg bg-snclbrown p-10 text-snclgray shadow-lg">
+      <div className="rounded-lg bg-gradient-to-tr from-sncgradientpink to-sncpink p-10 text-white shadow-lg">
         <p className="text-2xl font-extrabold">
           {t('ourVision')}
           :
@@ -24,7 +24,7 @@ function AboutPage() {
           {t('ourVisionText')}
         </p>
       </div>
-      <div className="rounded-lg bg-snclbrown  p-10 text-snclgray shadow-lg">
+      <div className="rounded-lg bg-gradient-to-t from-sncgradientpink to-sncpink  p-10 text-white shadow-lg">
         <p className="text-2xl font-extrabold">{t('whatMakesUsDifferent')}</p>
         <p>
           <span className="font-bold">{t('wideRange')}</span>
