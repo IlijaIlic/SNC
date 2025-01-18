@@ -123,10 +123,31 @@ function OglasiPage() {
       console.error('Error fetching data:', error);
     }
   };
-  useEffect(() => {
-    addFotograf();
-  }, []);
 
+  const getFotografiData = async () => {
+    try {
+      const response = await axios.get('http://localhost:5555/fotografi');
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      throw error;
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        console.log('OKOLO');
+        const res = await getFotografiData(); // Await the result
+        console.log(res); // Log the resolved data
+        console.log('OKOLO');
+      } catch (error) {
+        console.error('Error in addFotograf:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = ListaFotografa.slice(indexOfFirstPost, indexOfLastPost);
@@ -316,7 +337,7 @@ function OglasiPage() {
             </select>
           </div>
         </div>
-        <div className="m-4 flex w-full h-full flex-row flex-wrap ">
+        <div className="m-4 flex h-full w-full flex-row flex-wrap ">
           {filteredPosts.map((fotograf, index) => (
             <div key={index} className="mb-8 ml-12 mr-2 h-2/6 w-3/12 min-w-96">
               <OglasiCard fotograf={fotograf} />

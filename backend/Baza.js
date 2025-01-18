@@ -59,33 +59,35 @@ conn.connect((err) => {
     console.log("Napravljena baza mydb ili vec postoji!!");
     conn.changeUser({ database: "mydb" }, (err) => {
       if (err) throw new Error(err);
-      createTableAdmin(); //admin
-      createTableRestoran(); //restoran
-      createTableFotograf(); //fotograf
-      createTableJelovnik(); //jelovnik
-      createTableDekorater(); //dekorater
-      createTablePoslasticar(); //poslasticar
-      createTableTIP_TORTE(); //tip-torte
-      createTableMladenci(); //mladenci
-      createTableKorisnik(); //korisnik
-      createTableSlobodniTermini(); //slobodni termini
-      createTableSigKod(); //sigurnosni kodovi
-      createTableMailSave(); //mail save
-      createTableZakazano(); //rezervacija
-      createTableLikedFotograf();
-      createTableLikedDekorater();
-      createTableLikedPoslasticar();
-      createTableLikedRestoran();
-      createTableZakazaniJelovnik();
-      createTableGosti(); //gosti
-      createTableOceneDekorater(); //ocena dekoratera
-      createTableOcenePoslasticar(); //ocena poslasticara
-      createTableOceneFotograf(); //ocena fotografa
-      createTableOceneRestoran(); //ocena restorana
+      createTableAdmin(); //admin //prebaceno
+      createTableRestoran(); //restoran //prebaceno
+      createTableFotograf(); //fotograf // prebaceno
+      createTableJelovnik(); //jelovnikz // prebaceno
+      createTableDekorater(); //dekorater // prebaceno
+      createTablePoslasticar(); //poslasticar //prebaceno
+      createTableTIP_TORTE(); //tip-torte  // nije korisceno
+      createTableMladenci(); //mladenci // prebaceno
+      createTableKorisnik(); //korisnik // prebaceno
+      createTableSlobodniTermini(); //slobodni termini //prebaceno
+      createTableSigKod(); //sigurnosni kodovi //prebaceno
+      createTableMailSave(); //mail save // prebaceno
+      createTableZakazano(); //rezervacija  // prebaceno
+      createTableLikedFotograf(); // prebaceno
+      createTableLikedDekorater(); // prebaceno
+      createTableLikedPoslasticar(); // prebaceno
+      createTableLikedRestoran();  // prebaceno
+      createTableZakazaniJelovnik(); // prebaceno
+      createTableGosti(); //gosti // prebaceno
+      createTableOceneDekorater(); //ocena dekoratera //prebaceno
+      createTableOcenePoslasticar(); //ocena poslasticara // prebaceno
+      createTableOceneFotograf(); //ocena fotografa // prebaceno
+      createTableOceneRestoran(); //ocena restorana // prebaceno
+
       createTriggersDekorater(); //triger za dekoratera
       createTriggersPoslasticar(); //triger za poslasticara
       createTriggersFotograf(); //triger za fotografa
       createTriggersRestoran(); //triger za restoran
+      
       createTableSlikeDekorater(); //slike za dekoratera
       createTableSlikePoslasticar(); //slike za poslasticara
       createTableSlikeFotograf(); //slike za fotografa
@@ -587,6 +589,8 @@ baza.get("/poslasticar/:uid", (req, res) => {
     res.json(poslasticariList);
   });
 });
+
+
 baza.get("/restoran/:uid", (req, res) => {
   const { uid } = req.params;
   const query = `
