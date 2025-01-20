@@ -12,16 +12,16 @@ namespace SNCDatabase.Models
         public DateTime Termin { get; set; }
 
         [ForeignKey("Fotograf")]
-        public int FotografID { get; set; }
+        public int? FotografID { get; set; }
 
         [ForeignKey("Poslasticar")]
-        public int PoslasticarID { get; set; }
+        public int? PoslasticarID { get; set; }
 
         [ForeignKey("Dekorater")]
-        public int DekoraterID { get; set; }
+        public int? DekoraterID { get; set; }
 
         [ForeignKey("Restoran")]
-        public int RestoranID { get; set; }
+        public int? RestoranID { get; set; }
 
     }
 }

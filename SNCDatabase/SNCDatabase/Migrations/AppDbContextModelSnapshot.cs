@@ -667,16 +667,16 @@ namespace SNCDatabase.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<int>("DekoraterID")
+                    b.Property<int?>("DekoraterID")
                         .HasColumnType("int");
 
-                    b.Property<int>("FotografID")
+                    b.Property<int?>("FotografID")
                         .HasColumnType("int");
 
-                    b.Property<int>("PoslasticarID")
+                    b.Property<int?>("PoslasticarID")
                         .HasColumnType("int");
 
-                    b.Property<int>("RestoranID")
+                    b.Property<int?>("RestoranID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Termin")

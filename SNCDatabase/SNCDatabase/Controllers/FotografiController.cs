@@ -18,7 +18,17 @@ namespace SNCDatabase.Controllers
         [HttpGet]
         public IActionResult GetAllData()
         {
-            var data = _context.Fotografi.ToList(); 
+            // Retrieve all Fotograf data along with the related SlobodniTermini
+            var data = _context.Fotografi
+                .Select(fotograf => new
+                {
+                    Fotograf = fotograf,
+                    SlobodniTermini = _context.SlobodniTermini
+                        .Where(s => s.FotografID == fotograf.ID)
+                        .ToList()
+                })
+                .ToList();
+
             return Ok(data);
         }
 

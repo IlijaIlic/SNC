@@ -7,18 +7,18 @@
 /* eslint-disable react/button-has-type */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-unused-vars */
-import { Link } from 'react-router-dom';
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import FotografClass from '../OglasiComponents/FotografClass';
-import OglasiCardMladenac from '../OglasiComponents/OglasiCardMladenac';
+import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import FotografClass from "../OglasiComponents/FotografClass";
+import OglasiCardMladenac from "../OglasiComponents/OglasiCardMladenac";
 // eslint-disable-next-line import/no-named-as-default, import/no-named-as-default-member
-import Dekorater from '../OglasiComponents/DekoracijeClass';
+import Dekorater from "../OglasiComponents/DekoracijeClass";
 // eslint-disable-next-line import/no-unresolved
-import { Foods, Jelo, Pice } from '../OglasiComponents/Food';
-import Baker from '../OglasiComponents/BakerClass';
-import Torta from '../OglasiComponents/Torta';
-import Restoran from '../OglasiComponents/RestorasClass';
+import { Foods, Jelo, Pice } from "../OglasiComponents/Food";
+import Baker from "../OglasiComponents/BakerClass";
+import Torta from "../OglasiComponents/Torta";
+import Restoran from "../OglasiComponents/RestorasClass";
 
 function OglasiPage() {
   const [ListaFotografa, SetListaFotografa] = useState([]);
@@ -26,14 +26,16 @@ function OglasiPage() {
   const [postsPerPage] = useState(6);
   const [minCenaUsluge, setMinCenaUsluge] = useState(0);
   const [maxCenaUsluge, setMaxCenaUsluge] = useState(1000000);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [startDate, setStartDate] = useState(new Date(2000, 4, 11));
   const [endDate, setEndDate] = useState(new Date(2030, 4, 11));
-  const [selectedLocation, setSelectedLocation] = useState('Majdanpek');
-  const [selectedTimeframe, SetselectedTimeframe] = useState('Izaberi vremenski okvir');
+  const [selectedLocation, setSelectedLocation] = useState("Majdanpek");
+  const [selectedTimeframe, SetselectedTimeframe] = useState(
+    "Izaberi vremenski okvir"
+  );
   const [minCenaSlike, SetminCenaSlike] = useState(0);
   const [maxCenaSlike, SetmaxCenaSlike] = useState(1000000);
-  const [nazivAgencije, setNazivAgencije] = useState('');
+  const [nazivAgencije, setNazivAgencije] = useState("");
 
   const checkDateWithinTimeframe = (dates, timeframe) => {
     if (dates === undefined || dates == null) {
@@ -41,18 +43,20 @@ function OglasiPage() {
     }
     const currentTime = new Date();
     const timeframesInHours = {
-      'Izaberi vremenski okvir': 200000,
-      '1 dan': 24,
-      '3 dana': 72,
-      '7 dana': 168,
-      '14 dana': 336,
-      '30 dana': 720,
+      "Izaberi vremenski okvir": 200000,
+      "1 dan": 24,
+      "3 dana": 72,
+      "7 dana": 168,
+      "14 dana": 336,
+      "30 dana": 720,
     };
 
     const hoursToCheck = timeframesInHours[timeframe];
 
     // Računamo datum koji predstavlja trenutak "hoursToCheck" sati od trenutnog trenutka
-    const futureTime = new Date(currentTime.getTime() + hoursToCheck * 60 * 60 * 1000);
+    const futureTime = new Date(
+      currentTime.getTime() + hoursToCheck * 60 * 60 * 1000
+    );
 
     return dates.some((date) => {
       const terminDate = new Date(date.Slobodan_Termin);
@@ -61,15 +65,21 @@ function OglasiPage() {
     });
   };
 
-  const uniqueLocations = [...new Set(ListaFotografa.map((fotograf) => fotograf._Lokacija))];
+  const uniqueLocations = [
+    ...new Set(ListaFotografa.map((fotograf) => fotograf._Lokacija)),
+  ];
 
-  const handleSearch = (e) => { // Filtrira po Nazivu Agencije
+  const handleSearch = (e) => {
+    // Filtrira po Nazivu Agencije
     setSearchTerm(e.target.value);
   };
   // menjaju se dobro u stateu ali se ne prikazuju niti dobro
   const filterFotografiByDate = (fotograf) => {
     if (startDate && endDate) {
-      return fotograf._Datumosnivanja >= startDate && fotograf._Datumosnivanja <= endDate;
+      return (
+        fotograf._Datumosnivanja >= startDate &&
+        fotograf._Datumosnivanja <= endDate
+      );
     }
     return true;
   };
@@ -80,35 +90,35 @@ function OglasiPage() {
 
   const addFotograf = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/fotograf');
+      const response = await axios.get("http://localhost:8080/fotograf");
       const fetchedData = response.data;
-      console.log('Ovo je fetchovan data');
+      console.log("Ovo je fetchovan data");
       console.log(fetchedData);
       // NazivAgencije, Email, SigurnosniKod, CenaUsluge, Cenaposlici, Datumosnivanja, OpisKompanije, SlobodniTermini, Lokacija
       const fotografList = fetchedData.map((item) => ({
         ...new FotografClass(
           item.NazivAgencije,
           item.Email,
-          '1213412',
+          "1213412",
           item.Cena_Usluge,
           item.Cena_Po_Slici,
           new Date(item.Datum_Osnivanja), // Assuming Datum_Osnivanja is a valid date string
           item.Opis_Kompanije,
           item.Slobodni_Termini,
-          item.Lokacija,
+          item.Lokacija
 
           // ID je ID
         ), //
 
         ID: item.FotografID,
-        type: 'Fotograf',
+        type: "Fotograf",
       }));
       // console.log(fetchedData[0].Lokacija);
       SetListaFotografa(fotografList);
-      console.log('ovde je fotograf prvobitno');
+      console.log("ovde je fotograf prvobitno");
       console.log(fotografList); // ovde dobro stize
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   };
   useEffect(() => {
@@ -120,15 +130,25 @@ function OglasiPage() {
   const currentPosts = ListaFotografa.slice(indexOfFirstPost, indexOfLastPost);
 
   const filteredPosts = currentPosts.filter((fotograf) => {
-    const isCenaUslugeInRange = (!minCenaUsluge || fotograf._CenaUsluge >= minCenaUsluge)
-      && (!maxCenaUsluge || fotograf._CenaUsluge <= maxCenaUsluge);
-    const isCenaPosliciInRange = (!minCenaSlike || fotograf._Cenaposlici >= minCenaUsluge) && (!maxCenaSlike || fotograf._Cenaposlici <= maxCenaSlike);
+    const isCenaUslugeInRange =
+      (!minCenaUsluge || fotograf._CenaUsluge >= minCenaUsluge) &&
+      (!maxCenaUsluge || fotograf._CenaUsluge <= maxCenaUsluge);
+    const isCenaPosliciInRange =
+      (!minCenaSlike || fotograf._Cenaposlici >= minCenaUsluge) &&
+      (!maxCenaSlike || fotograf._Cenaposlici <= maxCenaSlike);
 
-    const isDateInRange = fotograf._Datumosnivanja >= startDate && fotograf._Datumosnivanja <= endDate;
+    const isDateInRange =
+      fotograf._Datumosnivanja >= startDate &&
+      fotograf._Datumosnivanja <= endDate;
 
-    const isAgencyNameMatch = fotograf._NazivAgencije.toLowerCase().includes(searchTerm.toLowerCase());
+    const isAgencyNameMatch = fotograf._NazivAgencije
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
 
-    const isDateWithinTimeframe = checkDateWithinTimeframe(fotograf._SlobodniTermini, selectedTimeframe); // ovo vraca false
+    const isDateWithinTimeframe = checkDateWithinTimeframe(
+      fotograf._SlobodniTermini,
+      selectedTimeframe
+    ); // ovo vraca false
     console.log(`Tacno je  isCenaUslugeInRange${isCenaUslugeInRange}`);
     console.log(`Tacno je  isCenaPosliciInRange${isCenaPosliciInRange}`);
     console.log(`Tacno je  isDateInRange${isDateInRange}`);
@@ -136,17 +156,49 @@ function OglasiPage() {
     console.log(`Tacno je isDateWithinTimeframe${isDateWithinTimeframe}`);
 
     // Return true if all conditions are met, indicating the fotograf should be included in the filtered list
-    return isCenaPosliciInRange && isCenaUslugeInRange && isDateInRange && isAgencyNameMatch && isDateWithinTimeframe;
+    return (
+      isCenaPosliciInRange &&
+      isCenaUslugeInRange &&
+      isDateInRange &&
+      isAgencyNameMatch &&
+      isDateWithinTimeframe
+    );
   });
 
   return (
     <div className="flex h-full w-full flex-col">
       <div className=" flex h-1/6 w-full justify-between bg-snclbrown px-12 py-6 ">
-        <button type="button" disabled className="min-w-36  rounded-md bg-snclblue px-4 py-2 text-white">Fotograf</button>
-        <button type="button" className="min-w-36 rounded-md bg-sncpink  px-4 py-2 text-white"><Link className="mx-2 hover:text-snclbrown" to="/oglasi/restoran">Restoran</Link></button>
-        <button type="button" className="min-w-36 rounded-md bg-sncpink  px-4 py-2 text-white"><Link className="mx-2 hover:text-snclbrown" to="/oglasi/baker">Torta</Link></button>
-        <button type="button" className="min-w-36 rounded-md bg-sncpink  px-4 py-2 text-white"><Link className="mx-2 hover:text-snclbrown" to="/oglasi/dekoracija">Dekoracija</Link></button>
-
+        <button
+          type="button"
+          disabled
+          className="min-w-36  rounded-md bg-snclblue px-4 py-2 text-white"
+        >
+          Fotograf
+        </button>
+        <button
+          type="button"
+          className="min-w-36 rounded-md bg-sncpink  px-4 py-2 text-white"
+        >
+          <Link className="mx-2 hover:text-snclbrown" to="/oglasi/restoran">
+            Restoran
+          </Link>
+        </button>
+        <button
+          type="button"
+          className="min-w-36 rounded-md bg-sncpink  px-4 py-2 text-white"
+        >
+          <Link className="mx-2 hover:text-snclbrown" to="/oglasi/baker">
+            Torta
+          </Link>
+        </button>
+        <button
+          type="button"
+          className="min-w-36 rounded-md bg-sncpink  px-4 py-2 text-white"
+        >
+          <Link className="mx-2 hover:text-snclbrown" to="/oglasi/dekoracija">
+            Dekoracija
+          </Link>
+        </button>
       </div>
 
       <div className=" flex h-full flex-auto">
@@ -242,7 +294,9 @@ function OglasiPage() {
             >
               <option value="">Izaberi lokaciju</option>
               {uniqueLocations.map((location) => (
-                <option key={location} value={location}>{location}</option>
+                <option key={location} value={location}>
+                  {location}
+                </option>
               ))}
             </select>
             <h3 className="mb-2 text-lg font-semibold">Slobodni u narednih:</h3>
@@ -251,7 +305,9 @@ function OglasiPage() {
               onChange={(e) => SetselectedTimeframe(e.target.value)}
               className="mb-2 w-full rounded-md border py-1"
             >
-              <option value="Izaberi vremenski okvir">Izaberi vremenski okvir</option>
+              <option value="Izaberi vremenski okvir">
+                Izaberi vremenski okvir
+              </option>
               <option value="1 dan">1 dan</option>
               <option value="3 dana">3 dana</option>
               <option value="7 dana">7 dana</option>
@@ -269,12 +325,18 @@ function OglasiPage() {
         </div>
       </div>
       <div className="mt-2 flex justify-center">
-
-        {Array.from({ length: Math.ceil(ListaFotografa.length / postsPerPage) }).map((_, index) => (
-          <button key={index} onClick={() => paginate(index + 1)} className="mx-1 rounded-md bg-bubble-gum px-3 py-1">{index + 1}</button>
+        {Array.from({
+          length: Math.ceil(ListaFotografa.length / postsPerPage),
+        }).map((_, index) => (
+          <button
+            key={index}
+            onClick={() => paginate(index + 1)}
+            className="mx-1 rounded-md bg-bubble-gum px-3 py-1"
+          >
+            {index + 1}
+          </button>
         ))}
       </div>
-
     </div>
   );
 }
