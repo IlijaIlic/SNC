@@ -29,7 +29,7 @@ namespace SNCDatabase.Models
 
         public DateTime DatumOsnivanja { get; set; }
 
-        public float Ocena { get; set; }
+        public float? Ocena { get; set; }
 
         public string? BrojTelefona { get; set; }
 

@@ -126,7 +126,7 @@ function OglasiPage() {
           // ID je ID
         ), //
 
-        ID: item.id,
+        ID: item.fotograf.id,
         type: "Fotograf",
       }));
       // console.log(fetchedData[0].Lokacija);

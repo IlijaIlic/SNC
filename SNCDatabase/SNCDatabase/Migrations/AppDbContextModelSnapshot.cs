@@ -78,7 +78,7 @@ namespace SNCDatabase.Migrations
                     b.Property<string>("Naziv")
                         .HasColumnType("longtext");
 
-                    b.Property<float>("Ocena")
+                    b.Property<float?>("Ocena")
                         .HasColumnType("float");
 
                     b.Property<string>("Opis")
@@ -131,7 +131,7 @@ namespace SNCDatabase.Migrations
                     b.Property<string>("Naziv")
                         .HasColumnType("longtext");
 
-                    b.Property<float>("Ocena")
+                    b.Property<float?>("Ocena")
                         .HasColumnType("float");
 
                     b.Property<string>("Opis")
@@ -398,7 +398,7 @@ namespace SNCDatabase.Migrations
                     b.Property<string>("Naziv")
                         .HasColumnType("longtext");
 
-                    b.Property<float>("Ocena")
+                    b.Property<float?>("Ocena")
                         .HasColumnType("float");
 
                     b.Property<string>("Opis")
@@ -448,7 +448,7 @@ namespace SNCDatabase.Migrations
                     b.Property<string>("Naziv")
                         .HasColumnType("longtext");
 
-                    b.Property<float>("Ocena")
+                    b.Property<float?>("Ocena")
                         .HasColumnType("float");
 
                     b.Property<string>("Opis")
