@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SNCDatabase.DB;
 
@@ -11,9 +12,11 @@ using SNCDatabase.DB;
 namespace SNCDatabase.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250119173227_NewMig")]
+    partial class NewMig
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -78,7 +81,7 @@ namespace SNCDatabase.Migrations
                     b.Property<string>("Naziv")
                         .HasColumnType("longtext");
 
-                    b.Property<float?>("Ocena")
+                    b.Property<float>("Ocena")
                         .HasColumnType("float");
 
                     b.Property<string>("Opis")
@@ -131,7 +134,7 @@ namespace SNCDatabase.Migrations
                     b.Property<string>("Naziv")
                         .HasColumnType("longtext");
 
-                    b.Property<float?>("Ocena")
+                    b.Property<float>("Ocena")
                         .HasColumnType("float");
 
                     b.Property<string>("Opis")
@@ -398,7 +401,7 @@ namespace SNCDatabase.Migrations
                     b.Property<string>("Naziv")
                         .HasColumnType("longtext");
 
-                    b.Property<float?>("Ocena")
+                    b.Property<float>("Ocena")
                         .HasColumnType("float");
 
                     b.Property<string>("Opis")
@@ -448,7 +451,7 @@ namespace SNCDatabase.Migrations
                     b.Property<string>("Naziv")
                         .HasColumnType("longtext");
 
-                    b.Property<float?>("Ocena")
+                    b.Property<float>("Ocena")
                         .HasColumnType("float");
 
                     b.Property<string>("Opis")
@@ -667,16 +670,16 @@ namespace SNCDatabase.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<int?>("DekoraterID")
+                    b.Property<int>("DekoraterID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("FotografID")
+                    b.Property<int>("FotografID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PoslasticarID")
+                    b.Property<int>("PoslasticarID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("RestoranID")
+                    b.Property<int>("RestoranID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Termin")
@@ -685,28 +688,6 @@ namespace SNCDatabase.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("SlobodniTermini");
-                });
-
-            modelBuilder.Entity("SNCDatabase.Models.Torta", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Cena")
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Naziv")
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("PoslasticarID")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Torte");
                 });
 
             modelBuilder.Entity("SNCDatabase.Models.ZakazanJelovnik", b =>

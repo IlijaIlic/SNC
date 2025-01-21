@@ -34,6 +34,7 @@ namespace SNCDatabase.DB
         public DbSet<SlikePoslasticar> SlikePoslasticara { get; set; }
         public DbSet<SlikeRestoran> SlikeRestorana { get; set; }
         public DbSet<SlobodanTermin> SlobodniTermini { get; set; }
+        public DbSet<Torta> Torte { get; set; }
         public DbSet<ZakazanJelovnik> ZakazaniJelovnici { get; set; }
         public DbSet<Zakazano> Zakazano { get; set; }
 
