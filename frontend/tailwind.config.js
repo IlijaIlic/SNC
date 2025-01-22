@@ -36,6 +36,11 @@ module.exports = withMT({
       'snclgray': '#35393C',
       'sncdbrown': '#B39986',
       'sncgradientpink': '#F5A0A9',
+      'sncnewbrown': '#443737',
+      'sncnewpurple': '#987284',
+      'sncnewcol1': '#D5AA9F',
+      'sncnewcol2': '#E8D5B7',
+      'sncnewcol3': '#F4E1D2',
     },
     extend: {
       animation: {

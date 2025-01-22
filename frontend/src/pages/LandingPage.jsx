@@ -10,7 +10,7 @@ function LandingPage() {
   const { t } = useTranslation();
 
   return (
-    <div className="flex w-full flex-col items-center pt-20">
+    <div className="flex w-full flex-col items-center">
       <div className="mb-20 mt-8 flex flex-col items-center ">
         <h1 className="my-8 text-center font-sncFont4 text-7xl text-sncpink ">Svadba Na Click</h1>
 

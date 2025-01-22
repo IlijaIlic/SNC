@@ -61,9 +61,10 @@ function App() {
         await user1.getIdTokenResult();
         setUser(user1);
 
-        const response = await axios.get(`http://localhost:8080/korisnik/${user1.uid}`);
+        const response = await axios.get(`http://localhost:5555/korisnici/${user1.uid}`);
         const fetchedData = response.data;
-        setUserType(fetchedData.TIP);
+        console.log(fetchedData);
+        setUserType(fetchedData.tip);
         console.log(userType);
       } else {
         setUser(null);
@@ -82,9 +83,9 @@ function App() {
       case 'Mladenci':
       case 'Admin':
         return <ProfileClient />;
-      case 'Restoran':
+      case 'restoran':
         return <RestoranProfile />;
-      case 'Dekorater':
+      case 'dekorater':
         return <DekoraterProfile />;
       case 'Poslasticar':
         return <PoslasticarProfile />;
@@ -101,7 +102,7 @@ function App() {
   return (
     <div className=" flex min-h-screen flex-col font-sncFont5">
       <Navbar />
-      <div className="flex flex-1">
+      <div className="flex flex-1 pt-20">
         <Routes>
           <Route path="/" exact element={<LandingPage />} />
           <Route path="/about" element={<AboutPage />} />

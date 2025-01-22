@@ -2,6 +2,7 @@
 /* eslint-disable import/no-named-as-default */
 /* eslint-disable max-len */
 /* eslint-disable no-unused-vars */
+/* eslint-disable eqeqeq */
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -27,39 +28,31 @@ function RegisterDekoraterPage() {
 
   const handleSubmit = async (values) => {
     try {
-      const sigCode = await axios.get(`http://localhost:8080/sigurnosnikod/${values.skod}`);
+      const sigCode = await axios.get(`http://localhost:5555/api/SigurnosniKod/${values.skod}`);
       const fetchedSigCode = sigCode.data;
       console.log(fetchedSigCode);
 
-      if (fetchedSigCode[0].Sigurnosni_Kod === values.skod) {
+      if (fetchedSigCode.sigKod == values.skod) {
         await createUserWithEmailAndPassword(auth, values.email, values.password);
 
-        await fetch('http://localhost:8080/dekorater', {
+        await fetch('http://localhost:5555/dekorateri', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            Ime: values.naziv,
-            Prezime: 'Dekorater',
-            Kratak_Opis: values.opis,
+            UID: auth.currentUser.uid,
+            SigurnosniKod: values.skod,
+            Naziv: values.naziv,
+            Opis: values.opis,
             Email: values.email,
             Sifra: values.password,
-            UID: auth.currentUser.uid,
-            Broj_Telefona: values.brojTelefona,
-            Sigurnosni_Kod: values.skod,
-            Datum_Osnivanja: values.datum,
             Lokacija: values.lokacija,
             Cena: values.cenaUsluge,
+            DatumOsnivanja: values.datum,
+            BrojTelefona: values.brojTelefona,
           }),
         });
-
-        const formData = new FormData();
-        if (selectedFiles) {
-          for (let i = 0; i < selectedFiles.length; i++) {
-            formData.append('images', selectedFiles[i]);
-          }
-        }
 
         navigate('/');
         window.location.reload();
@@ -73,31 +66,31 @@ function RegisterDekoraterPage() {
 
   // const { uid } = auth.currentUser.uid;
 
-  const [image, setImage] = useState();
+  // const [image, setImage] = useState();
 
-  const submitImage = async (e) => {
-    e.preventDefault();
+  // const submitImage = async (e) => {
+  //   e.preventDefault();
 
-    const formData1 = new FormData();
-    formData1.append('image', image);
+  //   const formData1 = new FormData();
+  //   formData1.append('image', image);
 
-    const result = await axios
-      .post(`http://localhost:8080/slikeDekorater/${auth.currentUser.uid}`, formData1, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-    console.log(result);
-  };
+  //   const result = await axios
+  //     .post(`http://localhost:8080/slikeDekorater/${auth.currentUser.uid}`, formData1, {
+  //       headers: {
+  //         'Content-Type': 'multipart/form-data',
+  //       },
+  //     });
+  //   console.log(result);
+  // };
 
-  const onInputChange = (e) => {
-    console.log(e.target.files[0]);
-    setImage(e.target.files[0]);
-  };
+  // const onInputChange = (e) => {
+  //   console.log(e.target.files[0]);
+  //   setImage(e.target.files[0]);
+  // };
 
-  const handleFileChange = (event) => {
-    setSelectedFiles(event.target.files);
-  };
+  // const handleFileChange = (event) => {
+  //   setSelectedFiles(event.target.files);
+  // };
 
   const {
     values, handleBlur, handleChange, errors, touched, dirty, isValid,
@@ -131,7 +124,7 @@ function RegisterDekoraterPage() {
 
       <div className="m-6 mx-10 items-center self-center text-center">
         <Link to="/" className="hover:text-snclbrown">
-          <p className="text-5xl font-extrabold">Svadba Na Click</p>
+          <p className="font-sncFont4 text-6xl">Svadba Na Click</p>
           <p className="my-3 text-center font-thin">{t('organizeWedding')}</p>
         </Link>
       </div>

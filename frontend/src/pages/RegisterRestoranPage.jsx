@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 /* eslint-disable import/no-named-as-default */
 /* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
@@ -25,36 +26,35 @@ function RegisterRestoranPage() {
 
   const handleSubmit = async (values) => {
     try {
-      const sigCode = await axios.get(`http://localhost:8080/sigurnosnikod/${values.skod}`);
+      const sigCode = await axios.get(`http://localhost:5555/api/SigurnosniKod/${values.skod}`);
       const fetchedSigCode = sigCode.data;
       console.log(fetchedSigCode);
 
-      if (fetchedSigCode[0].Sigurnosni_Kod === values.skod) {
+      if (fetchedSigCode.sigKod == values.skod) {
         await createUserWithEmailAndPassword(auth, values.email, values.password);
 
-        await fetch('http://localhost:8080/restoran', {
+        await fetch('http://localhost:5555/restorani', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
+            UID: auth.currentUser.uid,
+            SigurnosniKod: values.skod,
             Naziv: values.naziv,
-            Kratak_Opis: values.opis,
+            Opis: values.opis,
             Email: values.email,
+            Sifra: values.password,
             Lokacija: values.lokacija,
             Cena: null,
-            Datum_Osnivanja: values.datum,
-            Sifra: values.password,
-            Sigurnosni_Kod: values.skod,
-            RestoranPraviTortu: values.restoranPraviTortu,
-            Bend: false,
-            UID: auth.currentUser.uid,
-            Broj_Telefona: values.brojTelefona,
+            DatumOsnivanja: values.datum,
+            BrojTelefona: values.brojTelefona,
+            PraviTortu: values.restoranPraviTortu,
           }),
         });
         console.log(values);
-        navigate('/');
-        window.location.reload();
+        // navigate('/');
+        // window.location.reload();
       } else {
         alert('Sigurnosni kod nije ispravan');
       }

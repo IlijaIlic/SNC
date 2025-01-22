@@ -533,7 +533,7 @@ function ProfileClient() {
   );
 
   return (
-    <Tabs defaultValue={1} className="m-3 flex h-full w-full flex-col justify-center  pt-20">
+    <Tabs defaultValue={1} className="m-3 flex h-full w-full flex-col justify-center">
       <TabsList className="mx-2 mb-2 flex h-fit flex-row justify-around  rounded-lg bg-sncpink p-4">
         <Tab value={1} className="text-white hover:text-sncdbrown">{t('myProfile')}</Tab>
         <Tab value={2} className="text-white hover:text-sncdbrown">{t('wedding')}</Tab>

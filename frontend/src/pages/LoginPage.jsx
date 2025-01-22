@@ -44,10 +44,10 @@ function LoginPage() {
   };
 
   return (
-    <div className="flex w-full flex-row flex-wrap-reverse items-center justify-center pt-20">
+    <div className="flex w-full flex-row flex-wrap-reverse items-center justify-center">
       <div className="m-6 mx-10 items-center self-center text-center">
         <Link to="/" className="hover:text-snclbrown">
-          <p className="text-5xl font-extrabold">Svadba Na Click</p>
+          <p className="font-sncFont4 text-5xl">Svadba Na Click</p>
           <p className="my-3 text-center font-thin">{t('organizeWedding')}</p>
         </Link>
       </div>

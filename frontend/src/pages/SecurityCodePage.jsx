@@ -49,7 +49,7 @@ function SecurityCodePage() {
   };
 
   return (
-    <div className="flex h-full w-full flex-col items-center justify-around p-2 pt-20">
+    <div className="flex h-full w-full flex-col items-center justify-around p-2">
       <div>
         <div className=" flex  w-full  flex-row flex-wrap">
           <div className="m-2 flex h-60 w-1/2 flex-grow flex-col  justify-evenly rounded-lg bg-snclpink p-3  text-white shadow-lg md:w-1/3">
