@@ -23,10 +23,17 @@ namespace SNCDatabase.Controllers
             return Ok();
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("prekoid/{id}")]
         public IActionResult GetDekoraterById(int id)
         {
-            return Ok();
+            var dekorater = _context.Dekorateri.Find(id);
+
+            if (dekorater == null)
+            {
+                return NotFound("Dekorater not found");
+            }
+
+            return Ok(dekorater);
         }
 
         [HttpPost]
@@ -50,8 +57,8 @@ namespace SNCDatabase.Controllers
                     Lokacija = data.Lokacija,
                     Cena = data.Cena,
                     DatumOsnivanja = data.DatumOsnivanja,
+                    Ocena = 0.0f,
                     BrojTelefona = data.BrojTelefona,
-                    Ocena = 0.0f
                 };
 
                 await _context.Dekorateri.AddAsync(dekorater);

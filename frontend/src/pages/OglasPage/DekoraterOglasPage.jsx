@@ -24,14 +24,15 @@ function DekoraterOglasPage() {
     // Function to fetch profile data
     async function fetchProfileData() {
       try {
-        const response = await axios.get(`http://localhost:8080/dekorater/prekoid/${id}`);
+        const response = await axios.get(`http://localhost:5555/dekorateri/prekoid/${id}`);
         const fetchedData = response.data;
         console.log(fetchedData);
-        setNaziv(fetchedData[0].Ime);
-        setOsnovniPodaci(fetchedData[0].Kratak_Opis);
-        setEmail(fetchedData[0].Email);
-        setBrTelefona(fetchedData[0].Broj_Telefona);
-        setOcena(fetchedData[0].Ocena);
+        setNaziv(fetchedData.naziv);
+        setOsnovniPodaci(fetchedData.opis);
+        setEmail(fetchedData.email);
+        setBrTelefona(fetchedData.brojTelefona);
+        // setSlobodniTermini(fetchedData[0].Slobodni_Termini);
+        setOcena(fetchedData.ocena);
       } catch (error) {
         console.error('Failed to fetch profile data:', error);
         navigate('/badRequest');

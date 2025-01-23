@@ -24,14 +24,14 @@ function ResotranOglasPage() {
     // Function to fetch profile data
     async function fetchProfileData() {
       try {
-        const response = await axios.get(`http://localhost:8080/restoran/prekoid/${id}`);
+        const response = await axios.get(`http://localhost:5555/restorani/prekoid/${id}`);
         const fetchedData = response.data;
         console.log(fetchedData);
-        setNaziv(fetchedData[0].Naziv);
-        setOsnovniPodaci(fetchedData[0].Kratak_Opis);
-        setEmail(fetchedData[0].Email);
-        setBrTelefona(fetchedData[0].Broj_Telefona);
-        setOcena(fetchedData[0].Ocena);
+        setNaziv(fetchedData.naziv);
+        setOsnovniPodaci(fetchedData.opis);
+        setEmail(fetchedData.email);
+        setBrTelefona(fetchedData.brojTelefona);
+        setOcena(fetchedData.ocena);
       } catch (error) {
         console.error('Failed to fetch profile data:', error);
         navigate('/badRequest');
@@ -41,16 +41,17 @@ function ResotranOglasPage() {
     fetchProfileData();
   }, []); // Empty dependency array ensures this runs only once
 
-  useEffect(() => {
-    async function fetchImages() {
-      const responeSlike = await axios.get(`http://localhost:8080/slikeRestoran/url/${id}`);
-      const dataSlike = responeSlike.data;
-      setImages(dataSlike.images);
+  // useEffect(() => {
+  //   async function fetchImages() {
+  //     const responeSlike = await axios.get(`http://localhost:8080/slikeRestoran/url/${id}`);
+  //     const dataSlike = responeSlike.data;
+  //     setImages(dataSlike.images);
 
-      console.log(dataSlike);
-    }
-    fetchImages();
-  }, []);
+  //     console.log(dataSlike);
+  //   }
+  //   fetchImages();
+  // }, []);
+
   return (
     <div className=" relative h-full w-full">
       <img

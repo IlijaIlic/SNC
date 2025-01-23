@@ -24,10 +24,17 @@ namespace SNCDatabase.Controllers
             return Ok();
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("prekoid/{id}")]
         public IActionResult GetRestoranById(int id)
         {
-            return Ok();
+            var restoran = _context.Restorani.Find(id);
+
+            if (restoran == null)
+            {
+                return NotFound("Restoran not found");
+            }
+
+            return Ok(restoran);
         }
 
         [HttpPost]
@@ -51,9 +58,9 @@ namespace SNCDatabase.Controllers
                     Lokacija = data.Lokacija,
                     Cena = data.Cena,
                     DatumOsnivanja = data.DatumOsnivanja,
+                    Ocena = 0.0f,
                     BrojTelefona = data.BrojTelefona,
                     PraviTortu = data.PraviTortu,
-                    Ocena = 0.0f,
                 };
 
                 await _context.Restorani.AddAsync(restoran);
@@ -70,7 +77,7 @@ namespace SNCDatabase.Controllers
                 await _context.Korisnici.AddAsync(korisnik);
                 await _context.SaveChangesAsync();
 
-                return Ok(restoran);
+                return Ok("Restoran uspesno dodat");
             }
             catch (Exception e)
             {

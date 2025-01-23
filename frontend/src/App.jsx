@@ -80,7 +80,7 @@ function App() {
     }
     // return <Navigate to="/" />;
     switch (userType) {
-      case 'Mladenci':
+      case 'mladenci':
       case 'Admin':
         return <ProfileClient />;
       case 'restoran':
@@ -109,16 +109,16 @@ function App() {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/skod" element={<SecurityCodePage />} />
 
-          <Route path="/oglasi/fotograf" element={user && userType === 'Mladenci' ? <OglasiPageMladenci korisnik={user} /> : <OglasiPage />} />
-          <Route path="/oglasi/restoran" element={user && userType === 'Mladenci' ? <OglasiPageRestoranMladenci korisnik={user} /> : <OglasiPageRestoran />} />
-          <Route path="/oglasi/dekoracija" element={user && userType === 'Mladenci' ? <OglasiPageDekoraterMladenci korisnik={user} /> : <OglasiPageDekorater />} />
-          <Route path="/oglasi/baker" element={user && userType === 'Mladenci' ? <OglasiPageBakerMladenci korisnik={user} /> : <OglasiPageBaker />} />
+          <Route path="/oglasi/fotograf" element={user && userType === 'mladenci' ? <OglasiPageMladenci korisnik={user} /> : <OglasiPage />} />
+          <Route path="/oglasi/restoran" element={user && userType === 'mladenci' ? <OglasiPageRestoranMladenci korisnik={user} /> : <OglasiPageRestoran />} />
+          <Route path="/oglasi/dekoracija" element={user && userType === 'mladenci' ? <OglasiPageDekoraterMladenci korisnik={user} /> : <OglasiPageDekorater />} />
+          <Route path="/oglasi/baker" element={user && userType === 'mladenci' ? <OglasiPageBakerMladenci korisnik={user} /> : <OglasiPageBaker />} />
 
           {/* User logged in and they are 'Mladenci' = can reserve; if not logged in, can only view info */}
-          <Route path="/fotograf/:id" element={user && userType === 'Mladenci' ? <FotografOglasPageLogged /> : <FotografOglasPage />} />
-          <Route path="/poslasticar/:id" element={user && userType === 'Mladenci' ? <PoslasticarOglasPageLogged /> : <PoslasticarOglasPage />} />
-          <Route path="/dekorater/:id" element={user && userType === 'Mladenci' ? <DekoraterOglasPageLogged /> : <DekoraterOglasPage />} />
-          <Route path="/restoran/:id" element={user && userType === 'Mladenci' ? <RestoranOglasPageLogged /> : <RestoranOglasPage />} />
+          <Route path="/fotograf/:id" element={user && userType === 'mladenci' ? <FotografOglasPageLogged /> : <FotografOglasPage />} />
+          <Route path="/poslasticar/:id" element={user && userType === 'mladenci' ? <PoslasticarOglasPageLogged /> : <PoslasticarOglasPage />} />
+          <Route path="/dekorater/:id" element={user && userType === 'mladenci' ? <DekoraterOglasPageLogged /> : <DekoraterOglasPage />} />
+          <Route path="/restoran/:id" element={user && userType === 'mladenci' ? <RestoranOglasPageLogged /> : <RestoranOglasPage />} />
 
           <Route path="/profile" element={profileComponent} />
 

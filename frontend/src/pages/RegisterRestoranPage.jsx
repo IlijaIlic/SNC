@@ -46,7 +46,7 @@ function RegisterRestoranPage() {
             Email: values.email,
             Sifra: values.password,
             Lokacija: values.lokacija,
-            Cena: null,
+            Cena: 100,
             DatumOsnivanja: values.datum,
             BrojTelefona: values.brojTelefona,
             PraviTortu: values.restoranPraviTortu,

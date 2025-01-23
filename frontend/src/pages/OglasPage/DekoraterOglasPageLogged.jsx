@@ -36,21 +36,22 @@ function DekoraterOglasPageLogged() {
     // Function to fetch profile data
     async function fetchProfileData() {
       try {
-        const response = await axios.get(`http://localhost:8080/dekorater/prekoid/${id}`);
+        const response = await axios.get(`http://localhost:5555/dekorateri/prekoid/${id}`);
         const fetchedData = response.data;
-        setNaziv(fetchedData[0].Ime);
-        setOsnovniPodaci(fetchedData[0].Kratak_Opis);
-        setEmail(fetchedData[0].Email);
-        setBrTelefona(fetchedData[0].Broj_Telefona);
-        setSlobodniTermini(fetchedData[0].Slobodni_Termini);
-        setOcena(fetchedData[0].Ocena);
-        setCena(fetchedData[0].Cena);
+        console.log(fetchedData);
+        setNaziv(fetchedData.naziv);
+        setOsnovniPodaci(fetchedData.opis);
+        setEmail(fetchedData.email);
+        setBrTelefona(fetchedData.brojTelefona);
+        // setSlobodniTermini(fetchedData[0].Slobodni_Termini);
+        setOcena(fetchedData.ocena);
+        setCena(fetchedData.cena);
 
-        const responseZakazano = await axios.get(`http://localhost:8080/zakazanomladencima/prekouid/${auth.currentUser.uid}`);
-        const fetchedResponseZakazano = responseZakazano.data;
-        if (fetchedResponseZakazano[0].Dekorater_Termin !== null) {
-          setNeMoze(true);
-        }
+        // const responseZakazano = await axios.get(`http://localhost:8080/zakazanomladencima/prekouid/${auth.currentUser.uid}`);
+        // const fetchedResponseZakazano = responseZakazano.data;
+        // if (fetchedResponseZakazano[0].Dekorater_Termin !== null) {
+        //   setNeMoze(true);
+        // }
       } catch (error) {
         console.error('Failed to fetch profile data:', error);
         navigate('/badRequest');
@@ -60,26 +61,26 @@ function DekoraterOglasPageLogged() {
     fetchProfileData();
   }, []); // Empty dependency array ensures this runs only once
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const responseLiked = await axios.get(`http://localhost:8080/getLikedDekorater/${auth.currentUser.uid}`);
-        const likedDekorater = responseLiked.data;
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const responseLiked = await axios.get(`http://localhost:8080/getLikedDekorater/${auth.currentUser.uid}`);
+  //       const likedDekorater = responseLiked.data;
 
-        const numericId = Number(id); // Ensure id is a number
+  //       const numericId = Number(id); // Ensure id is a number
 
-        const isLiked = likedDekorater.some((dekorater) => dekorater.Dekorater_ID === numericId);
+  //       const isLiked = likedDekorater.some((dekorater) => dekorater.Dekorater_ID === numericId);
 
-        if (likedDekorater.length > 0 && isLiked) {
-          setLajkovano(true);
-        }
-      } catch (error) {
-        console.error('Error fetching responseLiked:', error);
-      }
-    };
+  //       if (likedDekorater.length > 0 && isLiked) {
+  //         setLajkovano(true);
+  //       }
+  //     } catch (error) {
+  //       console.error('Error fetching responseLiked:', error);
+  //     }
+  //   };
 
-    fetchData();
-  }, [id]);
+  //   fetchData();
+  // }, [id]);
 
   useEffect(() => {
     async function fetchImages() {

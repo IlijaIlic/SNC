@@ -56,26 +56,28 @@ function ResotranOglasPageLogged() {
     // Function to fetch profile data
     async function fetchProfileData() {
       try {
-        const response = await axios.get(`http://localhost:8080/restoran/prekoid/${id}`);
+        const response = await axios.get(`http://localhost:5555/restorani/prekoid/${id}`);
         const fetchedData = response.data;
-        setNaziv(fetchedData[0].Naziv);
-        setOsnovniPodaci(fetchedData[0].Kratak_Opis);
-        setEmail(fetchedData[0].Email);
-        setBrTelefona(fetchedData[0].Broj_Telefona);
-        setOcena(fetchedData[0].Ocena);
-        setMinCena(fetchedData[0].Cena);
-        setSlobodniTermini(fetchedData[0].Slobodni_Termini);
-        console.log(slobodniTermini);
+        setNaziv(fetchedData.naziv);
+        setOsnovniPodaci(fetchedData.opis);
+        setEmail(fetchedData.email);
+        setBrTelefona(fetchedData.brojTelefona);
+        setOcena(fetchedData.ocena);
+        setMinCena(fetchedData.cena);
 
-        const responseZakazano = await axios.get(`http://localhost:8080/zakazanomladencima/prekouid/${auth.currentUser.uid}`);
-        const fetchedResponseZakazano = responseZakazano.data;
-        if (fetchedResponseZakazano[0].Restoran_Termin !== null) {
-          setNeMoze(true);
-        }
+        // setSlobodniTermini(fetchedData[0].Slobodni_Termini);
+        // console.log(slobodniTermini);
 
-        const responseZaID = await axios.get(`http://localhost:8080/mladenci/${auth.currentUser.uid}`);
+        // const responseZakazano = await axios.get(`http://localhost:8080/zakazanomladencima/prekouid/${auth.currentUser.uid}`);
+        // const fetchedResponseZakazano = responseZakazano.data;
+        // if (fetchedResponseZakazano[0].Restoran_Termin !== null) {
+        // setNeMoze(true);
+        // }
+
+        const responseZaID = await axios.get(`http://localhost:5555/mladenci/${auth.currentUser.uid}`);
         const fetchedDataZaID = responseZaID.data;
-        setIdMl(fetchedDataZaID.ID);
+        console.log(fetchedData.id);
+        setIdMl(fetchedDataZaID.id);
       } catch (error) {
         console.error('Failed to fetch profile data:', error);
         navigate('/badRequest');
