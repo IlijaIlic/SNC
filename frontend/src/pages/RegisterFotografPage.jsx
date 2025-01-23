@@ -56,11 +56,12 @@ function RegisterFotografPage() {
             DatumOsnivanja: values.datum, // Corrected property name
             UID: auth.currentUser.uid,
             BrojTelefona: values.brojTelefona, // Corrected property name
+            Sifra: values.password,
           }),
         });
 
-        //navigate("/");
-        // window.location.reload();
+        navigate("/");
+        window.location.reload();
       }
     } catch (err) {
       console.error("Error posting data:", err);

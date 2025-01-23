@@ -188,7 +188,7 @@ function OglasiPageBakerMladenci({ korisnik }) {
           item.poslasticar.opis,
           new Date(item.poslasticar.datumOsnivanja),
           null,
-          item.Torte,
+          item.torte,
           item.slobodniTermini,
           item.poslasticar.lokacija
         ),

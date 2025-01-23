@@ -51,13 +51,19 @@ function OglasiPageBaker() {
 
   const handleOptionClick1 = (selectedOption) => {
     setImeTorte(selectedOption);
+    // Simulate an event object for handleInputChange nova verzija je sa ovim
+    const fakeEvent = { target: { value: selectedOption } };
+    handleInputChange(fakeEvent);
   };
+
   const getMostCommonOptions = (bakerList) => {
     const countMap = {};
 
     bakerList.forEach((baker) => {
       baker._ListaTorti.forEach((torta) => {
-        countMap[torta.Naziv] = (countMap[torta.Naziv] || 0) + 1;
+        console.log("nesto"); //stize
+        console.log(torta.naziv);
+        countMap[torta.naziv] = (countMap[torta.naziv] || 0) + 1;
       });
     });
 
@@ -89,6 +95,7 @@ function OglasiPageBaker() {
     setImeTorte(selectedOption.Naziv);
     // You can perform additional actions here if needed
   };
+
   const handleInputChange = (event) => {
     // iskreno proveri ovo
     // eslint-disable-next-line prefer-destructuring
@@ -98,7 +105,7 @@ function OglasiPageBaker() {
     // Filter the bakers based on the input value
     const filtered = ListaBaker.filter((baker) =>
       baker._ListaTorti.some((torta) =>
-        torta.Naziv.toLowerCase().includes(value.toLowerCase())
+        torta.naziv.toLowerCase().includes(value.toLowerCase())
       )
     );
 
@@ -182,7 +189,7 @@ function OglasiPageBaker() {
           item.poslasticar.opis,
           new Date(item.poslasticar.datumOsnivanja),
           null,
-          item.poslasticar.Torte,
+          item.torte,
           item.slobodniTermini,
           item.poslasticar.lokacija
         ),

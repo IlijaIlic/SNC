@@ -8,6 +8,9 @@ namespace SNCDatabase.Models
         [Key]
         public int ID { get; set; }
 
+        [Required]
+        public required string UID { get; set; }
+
         public string? Ime { get; set; }
 
         public string? Prezime { get; set; }
