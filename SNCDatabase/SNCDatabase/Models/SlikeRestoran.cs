@@ -9,9 +9,9 @@ namespace SNCDatabase.Models
         public int ID { get; set; }
 
         // SLIKA KAKO SE PREDSTAVITI
-        public int SLIKE { get; set; }
+        public string? SLIKE { get; set; }
 
-        public required string RestoranUID { get; set; }
+        public string? RestoranUID { get; set; }
 
         [ForeignKey("Restoran")]
         public int RestoranID { get; set; }

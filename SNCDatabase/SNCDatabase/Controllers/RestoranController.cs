@@ -123,7 +123,7 @@ namespace SNCDatabase.Controllers
         }
 
         [HttpPut("prekouid")]
-        public async Task<IActionResult> UpdateRestoran([FromBody] Restoran data)
+        public async Task<IActionResult> UpdateRestoran([FromBody] UpdateRestoranModel data)
         {
             try
             {
@@ -139,12 +139,12 @@ namespace SNCDatabase.Controllers
                     Console.WriteLine($"No restoran found with UID: {data.UID}");
                     return NotFound("Restoran not found");
                 }
-                restoran.Naziv = data.Naziv;
-                restoran.Opis = data.Opis;
-                restoran.Cena = data.Cena;
-                restoran.BrojTelefona = data.BrojTelefona;
-                restoran.PraviTortu = data.PraviTortu;
-                restoran.SigurnosniKod = restoran.SigurnosniKod;
+
+                if (!string.IsNullOrEmpty(data.Naziv)) restoran.Naziv = data.Naziv;
+                if (!string.IsNullOrEmpty(data.Opis)) restoran.Opis = data.Opis;
+                if (data.Cena.HasValue) restoran.Cena = data.Cena.Value;
+                if (!string.IsNullOrEmpty(data.BrojTelefona)) restoran.BrojTelefona = data.BrojTelefona;
+                if (data.PraviTortu.HasValue) restoran.PraviTortu = data.PraviTortu.Value;
 
                 await _context.SaveChangesAsync();
                 return Ok("Restoran uspesno azuriran");

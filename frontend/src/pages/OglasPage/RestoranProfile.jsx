@@ -180,7 +180,6 @@ function RestoranProfile() {
 
         console.log('OKO2');
 
-        // PRAVI TORTU PROMENITI !!!!!!
         console.log(isValid);
         if (isValid) {
           await fetch('http://localhost:5555/restorani/prekouid', {
@@ -194,43 +193,46 @@ function RestoranProfile() {
               Opis: opis,
               Cena: minimumCena,
               BrojTelefona: brTelefona,
-              PraviTortu: true,
+              PraviTortu: pravite,
             }),
           });
           setChange(!change);
         }
-        // if (selectedDate != null) {
-        //   const formattedDate = selectedDate.toISOString().slice(0, 19).replace('T', ' ');
+        if (selectedDate != null) {
+          const formattedDate = selectedDate.toISOString().slice(0, 19).replace('T', ' ');
 
-        //   await fetch(`http://localhost:5555/slobodniterminirestoran/prekoid/${idRestorana}`, {
-        //     method: 'POST',
-        //     headers: {
-        //       'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify({
-        //       Slobodan_Termin: formattedDate,
-        //     }),
-        //   });
-        //   console.log(formattedDate);
-        //   setSelectedDate(null);
-        // }
+          console.log('Selected Date');
+          console.log(selectedDate);
+
+          console.log('Formated Date');
+          console.log(formattedDate);
+          await fetch('http://localhost:5555/slobodnitermini/restorani', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              Termin: selectedDate,
+              RestoranID: idRestorana,
+            }),
+          });
+          console.log(formattedDate);
+          setSelectedDate(null);
+        }
         if (image != null) {
           const formData = new FormData();
-          formData.append('images', image);
-          const result = await axios.post(
-            `http://localhost:5555/slikeRestoran/${idRestorana}`,
-            formData,
-            {
-              headers: {
-                'Content-Type': 'multipart/form-data',
-              },
-            },
-          );
+          formData.append('img', image);
+          const rsp = await fetch(`http://localhost:5555/slike/restorani/${idRestorana}`, {
+            method: 'POST',
+            body: formData,
+          });
+          const result = await rsp.json();
           console.log(result);
         }
-        console.log('Successfully updated the profile');
         const response = await axios.get(`http://localhost:5555/restorani/prekouid/${auth.currentUser.uid}`);
         const fetchedData = response.data;
+        console.log('Successfully updated the profile');
+        console.log(response.data);
         setFreeDate(fetchedData.slobodniTermini);
       } catch (error) {
         console.error('Error updating profile:', error);
@@ -239,10 +241,15 @@ function RestoranProfile() {
       setChange(!change);
     }
   };
+
+  const cbHanlder = () => {
+    setPravite(!pravite);
+  };
+
   const overview = () => (
     <div className="flex flex-col gap-2">
       <div className="flex flex-row">
-        <p className=" font-bold">
+        <p className=" pr-2 font-bold">
           {t('nazivRestorana')}
           :
           {' '}
@@ -250,7 +257,7 @@ function RestoranProfile() {
         <p>{naziv}</p>
       </div>
       <div className="flex flex-row">
-        <p className=" font-bold">
+        <p className=" pr-2 font-bold">
           {' '}
           {t('trenutnaOcena')}
           :
@@ -265,7 +272,7 @@ function RestoranProfile() {
         <p className="">{ocena}</p>
       </div>
       <div className="flex flex-row">
-        <p className=" font-bold">
+        <p className="pr-2 font-bold">
           {' '}
           {t('Opis')}
           :
@@ -274,11 +281,11 @@ function RestoranProfile() {
         {opis}
       </div>
       <div className="flex flex-row">
-        <p className=" font-bold">Email: </p>
+        <p className="pr-2 font-bold">Email: </p>
         {email}
       </div>
       <div className="flex flex-row">
-        <p className=" font-bold">
+        <p className="pr-2 font-bold">
           {t('DaLiPraviteTortu')}
           :
           {' '}
@@ -286,7 +293,7 @@ function RestoranProfile() {
         {pravite ? 'Da' : 'Ne'}
       </div>
       <div className="flex flex-row">
-        <p className=" font-bold">
+        <p className="pr-2 font-bold">
           {' '}
           {t('datumOsnivanja')}
           :
@@ -295,7 +302,7 @@ function RestoranProfile() {
         {datumOsnivanja}
       </div>
       <div className="flex flex-row">
-        <p className=" font-bold">
+        <p className="pr-2 font-bold">
           {' '}
           {t('phoneNumber')}
           :
@@ -304,7 +311,7 @@ function RestoranProfile() {
         {brTelefona}
       </div>
       <div className="flex flex-row">
-        <p className=" font-bold">
+        <p className="pr-2 font-bold">
           {t('minimumcenaMenijaPoOsobi')}
           :
           {' '}
@@ -312,7 +319,7 @@ function RestoranProfile() {
         {minimumCena}
       </div>
       <div className="flex flex-row">
-        <p className=" font-bold">
+        <p className="pr-2 font-bold">
           {' '}
           {t('dodajFotografijePrethodnihRadova')}
           :
@@ -320,7 +327,7 @@ function RestoranProfile() {
 
       </div>
       <div className="flex flex-row">
-        <p className=" font-bold">
+        <p className="pr-2 font-bold">
           {' '}
           {t('slobodniTermini')}
           :
@@ -337,7 +344,7 @@ function RestoranProfile() {
       <div className="flex flex-row">
         <p className=" font-bold">
           {' '}
-          {t('nazivAgencije')}
+          {t('nazivRestorana')}
           :
         </p>
         <input type="text" className="mx-2 rounded-md text-black shadow-md" value={naziv} onChange={(e) => setNaziv(e.target.value)} />
@@ -367,7 +374,7 @@ function RestoranProfile() {
         <input type="text" className="mx-2 rounded-md text-black shadow-md" value={opis} onChange={(e) => setOpis(e.target.value)} />
       </div>
       <div className="flex flex-row">
-        <p className=" font-bold">Email: </p>
+        <p className="pr-2 font-bold">Email: </p>
         {email}
 
       </div>
@@ -378,12 +385,12 @@ function RestoranProfile() {
           :
           {' '}
         </p>
-        <input type="text" className="mx-2 rounded-md text-black shadow-md" value={pravite} onChange={(e) => setPravite(e.target.value)} />
+        <input type="checkbox" className="mx-2 rounded-md text-black shadow-md" checked={pravite} onChange={cbHanlder} />
 
       </div>
 
       <div className="flex flex-row">
-        <p className=" font-bold">
+        <p className="pr-2 font-bold">
           {' '}
           {t('datumOsnivanja')}
           :

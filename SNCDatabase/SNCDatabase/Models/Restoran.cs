@@ -32,10 +32,15 @@ namespace SNCDatabase.Models
         
         public bool PraviTortu { get; set; }
 
+    }
 
-
-
-
-
+    public class UpdateRestoranModel
+    {
+        public required string UID { get; set; }
+        public string? Naziv { get; set; }
+        public string? Opis { get; set; }
+        public int? Cena { get; set; }
+        public string? BrojTelefona { get; set; }
+        public bool? PraviTortu { get; set; }
     }
 }
