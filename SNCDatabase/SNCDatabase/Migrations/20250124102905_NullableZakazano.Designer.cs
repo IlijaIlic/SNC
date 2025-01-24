@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SNCDatabase.DB;
 
@@ -11,9 +12,11 @@ using SNCDatabase.DB;
 namespace SNCDatabase.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250124102905_NullableZakazano")]
+    partial class NullableZakazano
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -186,9 +189,6 @@ namespace SNCDatabase.Migrations
                         .HasColumnType("int");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<int>("Cena")
-                        .HasColumnType("int");
 
                     b.Property<string>("ImeJela")
                         .HasColumnType("longtext");
@@ -446,6 +446,7 @@ namespace SNCDatabase.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Lokacija")
@@ -464,6 +465,7 @@ namespace SNCDatabase.Migrations
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Sifra")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("SigurnosniKod")

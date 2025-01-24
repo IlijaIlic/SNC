@@ -14,6 +14,8 @@ namespace SNCDatabase.Models
 
         public int Kolicina { get; set; }
 
+        public int Cena { get; set; }
+
         [ForeignKey("Restoran")]
         public int RestoranID { get; set; }
 

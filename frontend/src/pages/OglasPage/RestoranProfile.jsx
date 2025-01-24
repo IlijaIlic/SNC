@@ -53,24 +53,25 @@ function RestoranProfile() {
 
     console.log(idRestorana);
     if (tipJela !== 0 && nazivJela !== '' && cenaJela !== '' && gramazaJela !== '') {
-      await fetch(`http://localhost:8080/jelovnik/${idRestorana}`, {
+      await fetch('http://localhost:5555/jelovnici', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           ImeJela: nazivJela,
-          TIP: tipJela,
+          TipJela: tipJela,
           Cena: cenaJela,
           Kolicina: gramazaJela,
+          RestoranID: idRestorana,
         }),
       });
     }
-    const responseJela = await axios.get(`http://localhost:8080/jelovnik/${idRestorana}`);
+    const responseJela = await axios.get(`http://localhost:5555/jelovnici/${idRestorana}`);
     console.log(responseJela);
 
     const fetchedDataJela = responseJela.data;
-    // fetchedDataJela.sort((a, b) => a.TIP - b.TIP);
+    fetchedDataJela.sort((a, b) => a.TIP - b.TIP);
     setFetchedJela(fetchedDataJela);
     console.log(fetchedJela);
     setNazivJela('');
@@ -82,8 +83,8 @@ function RestoranProfile() {
   const handleObrisi = async (idg) => {
     console.log(idg);
     try {
-      await axios.delete(`http://localhost:8080/jelovnik/${idg}`);
-      const responseJelovnik = await axios.get(`http://localhost:8080/jelovnik/${idRestorana}`);
+      await axios.delete(`http://localhost:5555/jelovnici/${idg}`);
+      const responseJelovnik = await axios.get(`http://localhost:5555/jelovnici/${idRestorana}`);
       const fetchedDataJelovnik = responseJelovnik.data;
       fetchedDataJelovnik.sort((a, b) => a.TIP - b.TIP);
       setFetchedJela(fetchedDataJelovnik);
@@ -107,26 +108,27 @@ function RestoranProfile() {
     // Function to fetch profile data
     async function fetchProfileData() {
       try {
-        const response = await axios.get(`http://localhost:8080/restoran/prekouid/${auth.currentUser.uid}`);
+        console.log(auth.currentUser.uid);
+        const response = await axios.get(`http://localhost:5555/restorani/prekouid/${auth.currentUser.uid}`);
         const fetchedData = response.data;
         console.log(fetchedData);
-        setIdRestorana(fetchedData[0].ID);
+        setIdRestorana(fetchedData.restoran.id);
 
-        setNaziv(fetchedData[0].Naziv);
-        setOpis(fetchedData[0].Kratak_Opis);
-        setEmail(fetchedData[0].Email);
-        setBrTelefona(fetchedData[0].Broj_Telefona);
-        setOcena(fetchedData[0].Ocena);
-        setDatumOsnivanja(fetchedData[0].Datum_Osnivanja);
-        setMinimumCena(fetchedData[0].Cena);
-        setPravite(fetchedData[0].RestoranPraviTortu);
-        setFreeDate(fetchedData[0].Slobodni_Termini);
-        console.log(fetchedData[0]);
+        setNaziv(fetchedData.restoran.naziv);
+        setOpis(fetchedData.restoran.opis);
+        setEmail(fetchedData.restoran.email);
+        setBrTelefona(fetchedData.restoran.brojTelefona);
+        setOcena(fetchedData.restoran.ocena);
+        setDatumOsnivanja(fetchedData.restoran.datumOsnivanja);
+        setMinimumCena(fetchedData.restoran.cena);
+        setPravite(fetchedData.restoran.praviTortu);
+        setFreeDate(fetchedData.slobodniTermini);
+        console.log(freeDate);
 
-        const responseZakazano = await axios.get(`http://localhost:8080/zakazanirestorani/prekouid/${auth.currentUser.uid}`);
-        const dataZakazano = responseZakazano.data;
-        setZakazaniMladenci(dataZakazano);
-        console.log(dataZakazano);
+        // const responseZakazano = await axios.get(`http://localhost:8080/zakazanirestorani/prekouid/${auth.currentUser.uid}`);
+        // const dataZakazano = responseZakazano.data;
+        setZakazaniMladenci(fetchedData.zakazano);
+        console.log(fetchedData.zakazano);
       } catch (error) {
         console.error('Failed to fetch profile data:', error);
       }
@@ -139,8 +141,11 @@ function RestoranProfile() {
     async function fetchJela() {
       try {
         if (idRestorana !== 0) {
-          const responseJela = await axios.get(`http://localhost:8080/jelovnik/${idRestorana}`);
+          const responseJela = await axios.get(`http://localhost:5555/jelovnici/${idRestorana}`);
           const fetchedDataJela = responseJela.data;
+          console.log('OKO');
+          console.log(fetchedDataJela);
+          console.log('OKO');
           fetchedDataJela.sort((a, b) => a.TIP - b.TIP);
           setFetchedJela(fetchedDataJela);
           console.log(fetchedJela);
@@ -153,9 +158,18 @@ function RestoranProfile() {
   }, [idRestorana]);
 
   const handleSetChange = async () => {
+    console.log('OKO');
     console.log(freeDate);
+    console.log('OKO');
+
+    console.log('OKO');
+    console.log(auth.currentUser.uid);
+    console.log('OKO');
+
     if (change === true) {
       try {
+        console.log('OKO');
+
         const isValid = await changeRestoranSchema.validate({
           naziv,
           opis,
@@ -163,43 +177,48 @@ function RestoranProfile() {
           brTelefona,
           pravite,
         });
+
+        console.log('OKO2');
+
+        // PRAVI TORTU PROMENITI !!!!!!
         console.log(isValid);
         if (isValid) {
-          await fetch(`http://localhost:8080/restoran/prekouid/${auth.currentUser.uid}`, {
+          await fetch('http://localhost:5555/restorani/prekouid', {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
+              UID: auth.currentUser.uid,
               Naziv: naziv,
-              Kratak_Opis: opis,
+              Opis: opis,
               Cena: minimumCena,
-              Broj_Telefona: brTelefona,
-              RestoranPraviTortu: pravite,
+              BrojTelefona: brTelefona,
+              PraviTortu: true,
             }),
           });
           setChange(!change);
         }
-        if (selectedDate != null) {
-          const formattedDate = selectedDate.toISOString().slice(0, 19).replace('T', ' ');
+        // if (selectedDate != null) {
+        //   const formattedDate = selectedDate.toISOString().slice(0, 19).replace('T', ' ');
 
-          await fetch(`http://localhost:8080/slobodniterminirestoran/prekoid/${idRestorana}`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              Slobodan_Termin: formattedDate,
-            }),
-          });
-          console.log(formattedDate);
-          setSelectedDate(null);
-        }
+        //   await fetch(`http://localhost:5555/slobodniterminirestoran/prekoid/${idRestorana}`, {
+        //     method: 'POST',
+        //     headers: {
+        //       'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({
+        //       Slobodan_Termin: formattedDate,
+        //     }),
+        //   });
+        //   console.log(formattedDate);
+        //   setSelectedDate(null);
+        // }
         if (image != null) {
           const formData = new FormData();
           formData.append('images', image);
           const result = await axios.post(
-            `http://localhost:8080/slikeRestoran/${idRestorana}`,
+            `http://localhost:5555/slikeRestoran/${idRestorana}`,
             formData,
             {
               headers: {
@@ -210,9 +229,9 @@ function RestoranProfile() {
           console.log(result);
         }
         console.log('Successfully updated the profile');
-        const response = await axios.get(`http://localhost:8080/restoran/prekouid/${auth.currentUser.uid}`);
+        const response = await axios.get(`http://localhost:5555/restorani/prekouid/${auth.currentUser.uid}`);
         const fetchedData = response.data;
-        setFreeDate(fetchedData[0].Slobodni_Termini);
+        setFreeDate(fetchedData.slobodniTermini);
       } catch (error) {
         console.error('Error updating profile:', error);
       }
@@ -449,20 +468,20 @@ function RestoranProfile() {
             </div>
             <div className="mb-3 flex flex-col gap-3">
               {fetchedJela.map((jelo) => (
-                <div className="flex flex-row items-center gap-3" key={jelo.ID}>
-                  <p><span className="font-bold">{jelo.TIP}</span></p>
-                  <p>{jelo.ImeJela}</p>
+                <div className="flex flex-row items-center gap-3" key={jelo.id}>
+                  <p><span className="font-bold">{jelo.tipJela}</span></p>
+                  <p>{jelo.imeJela}</p>
                   <p>
-                    {jelo.Cena}
+                    {jelo.cena}
                     {' '}
                     <span className="font-bold">din</span>
                   </p>
                   <p>
-                    {jelo.Kolicina}
+                    {jelo.kolicina}
                     {' '}
                     <span className="font-bold">g</span>
                   </p>
-                  <button type="button" className="rounded-md bg-snclbrown p-1 text-black hover:bg-sncdbrown" onClick={() => handleObrisi(jelo.ID)}>Obrisi</button>
+                  <button type="button" className="rounded-md bg-snclbrown p-1 text-black hover:bg-sncdbrown" onClick={() => handleObrisi(jelo.id)}>Obrisi</button>
                 </div>
               ))}
               <button onClick={handleDodaj} type="button" className="rounded-md bg-snclbrown p-1 text-black hover:bg-sncdbrown">
@@ -518,11 +537,11 @@ function RestoranProfile() {
                   :
                   {zakazan.Jelovnik.map((jelo) => (
                     <p>
-                      {jelo.ImeJela}
+                      {jelo.imeJela}
                       {' '}
                       {' - '}
                       {' '}
-                      {jelo.Cena}
+                      {jelo.cena}
                       {' '}
                       din
                     </p>

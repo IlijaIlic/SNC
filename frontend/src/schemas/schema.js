@@ -61,8 +61,8 @@ const changeRestoranSchema = yup.object().shape({
   naziv: yup.string('Pogresan format!').required('Neophodno polje'),
   opis: yup.string('Pogresan format!').required('Neophodno polje'),
   brTelefona: yup.string().matches(/^[0-9+/ ]+$/, 'Pogresan format telefona').required('Neophodno polje').max(15, 'Duzina prevelika'),
-  minimumCena: yup.string().matches(/^[0-9]+$/, 'Pogresan format').required('Neophodno polje'),
-  pravite: yup.string().matches(/^[0-1]+$/, 'Pogresan format').required('Neophodno polje'),
+  minimumCena: yup.string().matches(/^[0-9]+$/, 'Pogresan format 12').required('Neophodno polje'),
+  pravite: yup.string().matches(/^[0-1]+$/, 'Pogresan format 312').required('Neophodno polje'),
 });
 
 const changeFotografSchema = yup.object().shape({

@@ -10,17 +10,14 @@ namespace SNCDatabase.Models
         [Required]
         public required string UID { get; set; }
 
-        [Required]
         public required string SigurnosniKod { get; set; }
 
         public string? Naziv { get; set; }
 
         public string? Opis { get; set; }
-
-        [Required]
+   
         public string? Email { get; set; }
 
-        [Required]  
         public string? Sifra { get; set; }
 
         public string? Lokacija { get; set; }
