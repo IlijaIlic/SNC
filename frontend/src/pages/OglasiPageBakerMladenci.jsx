@@ -144,7 +144,7 @@ function OglasiPageBakerMladenci({ korisnik }) {
     );
 
     return dates.some((date) => {
-      const terminDate = new Date(date.Slobodan_Termin);
+      const terminDate = new Date(date.termin);
 
       return terminDate >= currentTime && terminDate <= futureTime;
     });
@@ -176,7 +176,7 @@ function OglasiPageBakerMladenci({ korisnik }) {
     try {
       // const response = await axios.get(`http://localhost:8080/poslasticar/${korisnik.uid}`);
       const response = await axios.get(
-        `http://localhost:5555/poslasticari/${korisnik.uid}`
+        `http://localhost:5555/poslasticari/korisnikuid/${korisnik.uid}`
       );
       const fetchedData = response.data;
       // Bio je cist datum osnivanja
@@ -195,11 +195,11 @@ function OglasiPageBakerMladenci({ korisnik }) {
         type: "Baker",
         ID: item.poslasticar.id,
         Prezime: null,
-        Ocena: item.Ocena, // OVo mora da se popravi
-        Liked: item.Liked, // 1 je tacno
+        Ocena: item.prosecnaOcena, // OVo mora da se popravi
+        Liked: item.liked, // 1 je tacno
       }));
       SetListaBaker(bakerList);
-      console.log("Lista poslasticara");
+      console.log("Lista poslasticara Mladenci");
       console.log(bakerList);
     } catch (error) {
       console.error("Error fetching Baker data:", error);

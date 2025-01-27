@@ -54,6 +54,42 @@ namespace SNCDatabase.Controllers
             return Ok(fotograf);
         }
 
+        [HttpGet("korisnikuid/{korisnikUid}")]
+        public IActionResult GetFotografiForKorisnikUID(string korisnikUid)
+        {
+            try
+            {
+                // Fetch all Fotograf entities
+                var fotografi = _context.Fotografi
+                    .Select(f => new
+                    {
+                        Fotograf = f,
+                        SlikeFotografa = _context.SlikeFotografa
+                            .Where(s => s.FotografID == f.ID)
+                            .ToList(),
+                        SlobodniTermini = _context.SlobodniTermini
+                            .Where(s => s.FotografID == f.ID)
+                            .ToList(),
+                        ProsecnaOcena = _context.OceneFotografi
+                            .Where(o => o.FotografID == f.ID)
+                            .Average(o => (double?)o.Ocena) ?? 0.0, // Calculate average rating, default to 0.0
+
+                        // Check if the fotograf is liked by the user
+                        Liked = _context.SacuvaniFotografi
+                            .Any(sf => sf.UID == korisnikUid && sf.FotografID == f.ID)
+                    })
+                    .ToList();
+
+                return Ok(fotografi);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = $"Error occurred: {ex.Message}" });
+            }
+        }
+
+
+
         [HttpGet("prekouid/{uid}")]
         public IActionResult GetFotografByUID(string uid)
         {

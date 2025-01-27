@@ -150,5 +150,48 @@ namespace SNCDatabase.Controllers
 
             return Ok(result);
         }
+
+        [HttpGet("korisnikuid/{korisnikUid}")]
+        public IActionResult GetPoslasticariForKorisnikUID(string korisnikUid)
+        {
+            try
+            {
+                // Retrieve all Poslasticari along with related data and calculate if liked by the user
+                var poslasticari = _context.Poslasticari
+                    .Select(poslasticar => new
+                    {
+                        Poslasticar = poslasticar,
+                        SlobodniTermini = _context.SlobodniTermini
+                            .Where(t => t.PoslasticarID == poslasticar.ID)
+                            .ToList(),
+                        SlikePoslasticara = _context.SlikePoslasticara
+                            .Where(s => s.PoslasticarID == poslasticar.ID)
+                            .ToList(),
+                        Torte = _context.Torte
+                            .Where(t => t.PoslasticarID == poslasticar.ID)
+                            .ToList(),
+                        ProsecnaOcena = _context.OceneDekorateri
+                            .Where(o => o.DekoraterID == poslasticar.ID)
+                            .Average(o => (double?)o.Ocena) ?? 0.0, // Calculate average rating, default to 0.0
+                        Liked = _context.SacuvaniPoslasticari
+                            .Any(sp => sp.UID == korisnikUid && sp.PoslasticarID == poslasticar.ID) // Check if liked
+                    })
+                    .ToList();
+
+                if (!poslasticari.Any())
+                {
+                    return NotFound("No Poslasticari found.");
+                }
+
+                return Ok(poslasticari);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = $"Error occurred: {ex.Message}" });
+            }
+        }
+
+
+
     }
 }

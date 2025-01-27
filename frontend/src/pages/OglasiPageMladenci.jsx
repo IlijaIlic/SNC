@@ -77,7 +77,7 @@ function OglasiPageMladenci({ korisnik }) {
     );
 
     return dates.some((date) => {
-      const terminDate = new Date(date.Slobodan_Termin);
+      const terminDate = new Date(date.termin);
 
       return terminDate >= currentTime && terminDate <= futureTime;
     });
@@ -109,7 +109,7 @@ function OglasiPageMladenci({ korisnik }) {
   const addFotograf = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5555/fotografi/${korisnik.uid}`
+        `http://localhost:5555/fotografi/korisnikuid/${korisnik.uid}`
       );
       const fetchedData = response.data;
       console.log("Ovo je fetchovan data");
@@ -132,10 +132,12 @@ function OglasiPageMladenci({ korisnik }) {
 
         ID: item.fotograf.id,
         type: "Fotograf",
-        Ocena: item.Ocena,
-        Liked: item.Liked,
+        Ocena: item.prosecnaOcena,
+        Liked: item.liked,
       }));
       // console.log(fetchedData[0].Lokacija);
+      console.log("Ovo je korisnik");
+      console.log(korisnik);
       SetListaFotografa(fotografList);
       console.log("ovde je fotograf prvobitno");
       console.log(fotografList); // ovde dobro stize
@@ -174,13 +176,16 @@ function OglasiPageMladenci({ korisnik }) {
     const isLokacijaMatch =
       selectedLocation === "" ||
       fotograf._Lokacija.toLowerCase().includes(selectedLocation.toLowerCase());
-    console.log(`Tacno je  isCenaUslugeInRange${isCenaUslugeInRange}`);
-    console.log(`Tacno je  isCenaPosliciInRange${isCenaPosliciInRange}`);
-    console.log(`Tacno je  isDateInRange${isDateInRange}`);
-    console.log(`Tacno je  isAgencyNameMatch${isAgencyNameMatch}`);
-    console.log(`Tacno je isDateWithinTimeframe${isDateWithinTimeframe}`);
 
     // Return true if all conditions are met, indicating the fotograf should be included in the filtered list
+    console.log(
+      isCenaPosliciInRange &&
+        isCenaUslugeInRange &&
+        isDateInRange &&
+        isAgencyNameMatch &&
+        isDateWithinTimeframe &&
+        isLokacijaMatch
+    );
     return (
       isCenaPosliciInRange &&
       isCenaUslugeInRange &&

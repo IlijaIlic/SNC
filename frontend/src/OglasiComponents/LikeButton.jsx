@@ -12,6 +12,7 @@ function LikeButton({ korisnik, oglas }) {
 
   useEffect(() => {
     console.log(oglas.Liked);
+    console.log(korisnik.uid, oglas.type, oglas.ID);
     if (oglas.Liked == true) {
       setLiked(true);
     } else {
@@ -22,8 +23,8 @@ function LikeButton({ korisnik, oglas }) {
   const handleLike = async () => {
     setLiked(!liked);
     const endpoint = liked
-      ? "http://localhost:8080/deleteLikedEntity"
-      : "http://localhost:8080/addLikedEntity";
+      ? "http://localhost:5555/like/Like/deleteLikedEntity"
+      : "http://localhost:5555/like/Like/addLikedEntity";
     try {
       await axios.post(endpoint, {
         UID: korisnik.uid,

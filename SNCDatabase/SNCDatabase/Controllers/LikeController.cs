@@ -17,18 +17,26 @@ namespace SNCDatabase.Controllers
         {
             _context = context;
         }
+        public class LikeRequest
+        {
+            public string UID { get; set; }
+            public string Type { get; set; }
+            public int EntityID { get; set; }
+        }
 
         //NE ZNAM STA VRACA za TYPE TO MORA DA SE POGLEDA NE SECAM SE
         [HttpPost("addLikedEntity")]
-        public async Task<IActionResult> AddLikedEntity([FromBody] dynamic requestData)
+        public async Task<IActionResult> AddLikedEntity([FromBody] LikeRequest requestData)
         {
             string uid = requestData.UID;
             string type = requestData.Type;
             int entityId = requestData.EntityID;
 
             try
+
             {
-                if (type == "dekorater")
+                Console.WriteLine($"Request received: {requestData}");
+                if (type == "Dekorater")
                 {
                     var newEntity = new SacuvanDekorater
                     {
@@ -37,7 +45,7 @@ namespace SNCDatabase.Controllers
                     };
                     await _context.SacuvaniDekorateri.AddAsync(newEntity);
                 }
-                else if (type == "fotograf")
+                else if (type == "Fotograf")
                 {
                     var newEntity = new SacuvanFotograf
                     {
@@ -46,7 +54,7 @@ namespace SNCDatabase.Controllers
                     };
                     await _context.SacuvaniFotografi.AddAsync(newEntity);
                 }
-                else if (type == "poslasticar")
+                else if (type == "Baker")
                 {
                     var newEntity = new SacuvanPoslasticar
                     {
@@ -55,7 +63,7 @@ namespace SNCDatabase.Controllers
                     };
                     await _context.SacuvaniPoslasticari.AddAsync(newEntity);
                 }
-                else if (type == "restoran")
+                else if (type == "Restoran")
                 {
                     var newEntity = new SacuvanRestoran
                     {
@@ -74,12 +82,12 @@ namespace SNCDatabase.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = $"Error occurred: {ex.Message}" });
+                return StatusCode(500, new { message = $"Error occurred: {requestData}" });
             }
         }
 
         [HttpPost("deleteLikedEntity")]
-        public async Task<IActionResult> DeleteLikedEntity([FromBody] dynamic requestData)
+        public async Task<IActionResult> DeleteLikedEntity([FromBody] LikeRequest requestData)
         {
             string uid = requestData.UID;
             string type = requestData.Type;
@@ -87,7 +95,7 @@ namespace SNCDatabase.Controllers
 
             try
             {
-                if (type == "dekorater")
+                if (type == "Dekorater")
                 {
                     var entity = _context.SacuvaniDekorateri
                         .FirstOrDefault(e => e.UID == uid && e.DekoraterID == entityId);
@@ -97,7 +105,7 @@ namespace SNCDatabase.Controllers
                         _context.SacuvaniDekorateri.Remove(entity);
                     }
                 }
-                else if (type == "fotograf")
+                else if (type == "Fotograf")
                 {
                     var entity = _context.SacuvaniFotografi
                         .FirstOrDefault(e => e.UID == uid && e.FotografID == entityId);
@@ -107,7 +115,7 @@ namespace SNCDatabase.Controllers
                         _context.SacuvaniFotografi.Remove(entity);
                     }
                 }
-                else if (type == "poslasticar")
+                else if (type == "Baker")
                 {
                     var entity = _context.SacuvaniPoslasticari
                         .FirstOrDefault(e => e.UID == uid && e.PoslasticarID == entityId);
@@ -117,7 +125,7 @@ namespace SNCDatabase.Controllers
                         _context.SacuvaniPoslasticari.Remove(entity);
                     }
                 }
-                else if (type == "restoran")
+                else if (type == "Restoran")
                 {
                     var entity = _context.SacuvaniRestorani
                         .FirstOrDefault(e => e.UID == uid && e.RestoranID == entityId);
