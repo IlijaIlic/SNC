@@ -47,8 +47,8 @@ function ResotranOglasPageLogged() {
 
   function handleOdaberi(jelo) {
     setIzabranaJela([...izabranaJela, jelo]);
-    setIzabranaCena(izabranaCena + jelo.Cena);
-    setDisabledButtons([...disabledButtons, jelo.ID]);
+    setIzabranaCena(izabranaCena + jelo.cena);
+    setDisabledButtons([...disabledButtons, jelo.id]);
     console.log(jelo);
   }
 
@@ -58,13 +58,15 @@ function ResotranOglasPageLogged() {
       try {
         const response = await axios.get(`http://localhost:5555/restorani/prekoid/${id}`);
         const fetchedData = response.data;
-        setNaziv(fetchedData.naziv);
-        setOsnovniPodaci(fetchedData.opis);
-        setEmail(fetchedData.email);
-        setBrTelefona(fetchedData.brojTelefona);
-        setOcena(fetchedData.ocena);
-        setMinCena(fetchedData.cena);
+        setNaziv(fetchedData.restoran.naziv);
+        setOsnovniPodaci(fetchedData.restoran.opis);
+        setEmail(fetchedData.restoran.email);
+        setBrTelefona(fetchedData.restoran.brojTelefona);
+        setOcena(fetchedData.restoran.ocena);
+        setMinCena(fetchedData.restoran.cena);
 
+        setJela(fetchedData.jelovnik.sort((a, b) => a.TIP - b.TIP));
+        console.log(jela);
         // setSlobodniTermini(fetchedData[0].Slobodni_Termini);
         // console.log(slobodniTermini);
 
@@ -90,18 +92,20 @@ function ResotranOglasPageLogged() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const responseLiked = await axios.get(`http://localhost:8080/getLikedRestoran/${auth.currentUser.uid}`);
-        const likedRestorans = responseLiked.data;
+        const responseLiked = await axios.get('http://localhost:5555/restorani/liked/', {
+          params: {
+            UID: auth.currentUser.uid,
+            RestoranID: id,
+          },
+        });
 
-        const numericId = Number(id); // Ensure id is a number
+        const isLiked = responseLiked.data;
 
-        const isLiked = likedRestorans.some((restoran) => restoran.Restoran_ID === numericId);
-
-        if (likedRestorans.length > 0 && isLiked) {
+        if (isLiked) {
           setLajkovano(true);
         }
       } catch (error) {
-        console.error('Error fetching responseLiked:', error);
+        console.error('Error fetching liked status:', error);
       }
     };
 
@@ -138,7 +142,7 @@ function ResotranOglasPageLogged() {
 
   const handleSacuvaj = async () => {
     try {
-      await fetch('http://localhost:8080/addLikedEntity', {
+      await fetch('http://localhost:5555/like/Like/addLikedEntity', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -157,7 +161,7 @@ function ResotranOglasPageLogged() {
 
   const handleIzbaci = async () => {
     try {
-      await fetch('http://localhost:8080/deleteLikedEntity', {
+      await fetch('http://localhost:5555/like/Like/deleteLikedEntity', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -314,20 +318,20 @@ function ResotranOglasPageLogged() {
           </p>
           <div className="mb-3 flex flex-col gap-3">
             {jela.map((jelo) => (
-              <div className="flex flex-row items-center justify-center gap-3" key={jelo.ID}>
-                <p><span className="font-bold">{jelo.TIP}</span></p>
-                <p>{jelo.ImeJela}</p>
+              <div className="flex flex-row items-center justify-center gap-3" key={jelo.id}>
+                <p><span className="font-bold">{jelo.tipJela}</span></p>
+                <p>{jelo.imeJela}</p>
                 <p>
-                  {jelo.Cena}
+                  {jelo.cena}
                   {' '}
                   <span className="font-bold">din</span>
                 </p>
                 <p>
-                  {jelo.Kolicina}
+                  {jelo.kolicina}
                   {' '}
                   <span className="font-bold">g</span>
                 </p>
-                <button disabled={disabledButtons.includes(jelo.ID)} type="button" className={disabledButtons.includes(jelo.ID) ? 'h-6 w-6 rounded-md bg-sncdbrown text-white ' : 'h-6 w-6 rounded-md bg-snclbrown text-white hover:bg-sncdbrown'} onClick={() => handleOdaberi(jelo)}>{disabledButtons.includes(jelo.ID) ? ' ' : '+'}</button>
+                <button disabled={disabledButtons.includes(jelo.id)} type="button" className={disabledButtons.includes(jelo.id) ? 'h-6 w-6 rounded-md bg-sncdbrown text-white ' : 'h-6 w-6 rounded-md bg-snclbrown text-white hover:bg-sncdbrown'} onClick={() => handleOdaberi(jelo)}>{disabledButtons.includes(jelo.id) ? ' ' : '+'}</button>
               </div>
             ))}
             <p className=" text-xl font-bold">

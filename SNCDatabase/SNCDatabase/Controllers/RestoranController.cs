@@ -28,13 +28,34 @@ namespace SNCDatabase.Controllers
         [HttpGet("prekoid/{id}")]
         public IActionResult GetRestoranById(int id)
         {
-            var restoran = _context.Restorani.Find(id);
+
+            var restoran = _context.Restorani
+                    .Where(r => r.ID == id)
+                    .Select(r => new
+                    {
+                        Restoran = r,
+                        SlikeRestoran = _context.SlikeRestorana
+                            .Where(s => s.RestoranID == r.ID)
+                            .ToList(),
+                        SlobodniTermini = _context.SlobodniTermini
+                            .Where(st => st.RestoranID == r.ID)
+                            .ToList(),
+                        ProsecnaOcena = _context.OceneRestorani
+                            .Where(o => o.RestoranID == r.ID)
+                            .Average(o => (double?)o.Ocena) ?? 0.0,
+                        Zakazano = _context.Zakazano
+                             .Where(z => z.RestoranID == r.ID)
+                             .ToList(),
+                        Jelovnik = _context.Jelovnici
+                            .Where(j => j.RestoranID == r.ID)
+                            .ToList()
+                    })
+                    .FirstOrDefault();
 
             if (restoran == null)
             {
                 return NotFound("Restoran not found");
             }
-
             return Ok(restoran);
         }
 
@@ -153,6 +174,15 @@ namespace SNCDatabase.Controllers
             {
                 return BadRequest("Error: " + e.Message);
             }
+        }
+
+        [HttpGet("liked")]
+        public IActionResult IsResotranLiked([FromQuery] string UID, [FromQuery] int RestoranID)
+        {
+            bool isLiked = _context.SacuvaniRestorani
+                .Any(r => r.UID == UID && r.RestoranID == RestoranID);
+
+            return Ok(isLiked);
         }
     }
 }

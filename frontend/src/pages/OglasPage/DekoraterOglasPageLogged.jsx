@@ -61,30 +61,32 @@ function DekoraterOglasPageLogged() {
     fetchProfileData();
   }, []); // Empty dependency array ensures this runs only once
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const responseLiked = await axios.get(`http://localhost:8080/getLikedDekorater/${auth.currentUser.uid}`);
-  //       const likedDekorater = responseLiked.data;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const responseLiked = await axios.get('http://localhost:5555/dekorateri/liked/', {
+          params: {
+            UID: auth.currentUser.uid,
+            DekoraterID: id,
+          },
+        });
 
-  //       const numericId = Number(id); // Ensure id is a number
+        const isLiked = responseLiked.data;
 
-  //       const isLiked = likedDekorater.some((dekorater) => dekorater.Dekorater_ID === numericId);
+        if (isLiked) {
+          setLajkovano(true);
+        }
+      } catch (error) {
+        console.error('Error fetching liked status:', error);
+      }
+    };
 
-  //       if (likedDekorater.length > 0 && isLiked) {
-  //         setLajkovano(true);
-  //       }
-  //     } catch (error) {
-  //       console.error('Error fetching responseLiked:', error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, [id]);
+    fetchData();
+  }, [id]); // Ensure effect runs when `id` changes
 
   useEffect(() => {
     async function fetchImages() {
-      const responeSlike = await axios.get(`http://localhost:8080/slikeDekorater/url/${id}`);
+      const responeSlike = await axios.fetch(`http://localhost:8080/slikeDekorater/url/${id}`);
       const dataSlike = responeSlike.data;
       setImages(dataSlike.images);
 
@@ -123,7 +125,7 @@ function DekoraterOglasPageLogged() {
 
   const handleSacuvaj = async () => {
     try {
-      await fetch('http://localhost:8080/addLikedEntity', {
+      await fetch('http://localhost:5555/like/Like/addLikedEntity', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -142,7 +144,7 @@ function DekoraterOglasPageLogged() {
 
   const handleIzbaci = async () => {
     try {
-      await fetch('http://localhost:8080/deleteLikedEntity', {
+      await fetch('http://localhost:5555/like/Like/deleteLikedEntity', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

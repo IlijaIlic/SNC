@@ -12,6 +12,8 @@ namespace SNCDatabase.Controllers
 
         private readonly AppDbContext _context;
 
+      
+
         public DekoraterController(AppDbContext context)
         {
             _context = context;
@@ -34,6 +36,16 @@ namespace SNCDatabase.Controllers
             }
 
             return Ok(dekorater);
+        }
+
+
+        [HttpGet("liked")]
+        public IActionResult IsDekoraterLiked([FromQuery] string UID, [FromQuery] int DekoraterID)
+        {
+            bool isLiked = _context.SacuvaniDekorateri
+                .Any(d => d.UID == UID && d.DekoraterID == DekoraterID);
+
+            return Ok(isLiked);
         }
 
         [HttpPost]
