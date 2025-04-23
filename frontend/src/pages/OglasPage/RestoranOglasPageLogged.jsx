@@ -40,10 +40,11 @@ function ResotranOglasPageLogged() {
   const [minCena, setMinCena] = useState(0);
   const { id } = useParams();
 
-  const isDateReserved = (date) => {
-    const dateString = date.toISOString().split('T')[0];
-    return !slobodniTermini.some((item) => item.Slobodan_Termin.split('T')[0] === dateString);
-  };
+  const isDateReserved = (date) => !slobodniTermini.some((item) => {
+    const dbDate = new Date(item.termin); // Convert database string to Date object
+
+    return dbDate.toISOString().slice(0, 10) === date.toISOString().slice(0, 10);
+  });
 
   function handleOdaberi(jelo) {
     setIzabranaJela([...izabranaJela, jelo]);
@@ -67,7 +68,13 @@ function ResotranOglasPageLogged() {
 
         setJela(fetchedData.jelovnik.sort((a, b) => a.TIP - b.TIP));
         console.log(jela);
-        // setSlobodniTermini(fetchedData[0].Slobodni_Termini);
+        setSlobodniTermini(fetchedData.slobodniTermini);
+
+        console.log('OKVIR');
+        console.log(fetchedData.slobodniTermini);
+        console.log(slobodniTermini);
+        console.log('OKVIR');
+
         // console.log(slobodniTermini);
 
         // const responseZakazano = await axios.get(`http://localhost:8080/zakazanomladencima/prekouid/${auth.currentUser.uid}`);
@@ -112,22 +119,22 @@ function ResotranOglasPageLogged() {
     fetchData();
   }, [id]);
 
-  useEffect(() => {
-    async function fetchJela() {
-      try {
-        if (id !== 0) {
-          const responseJela = await axios.get(`http://localhost:8080/jelovnik/${id}`);
-          const fetchedDataJela = responseJela.data;
-          fetchedDataJela.sort((a, b) => a.TIP - b.TIP);
-          setJela(fetchedDataJela);
-          console.log(jela);
-        }
-      } catch (error) {
-        console.error('Failed to fetch guests data:', error);
-      }
-    }
-    fetchJela();
-  }, [id]);
+  // useEffect(() => {
+  //   async function fetchJela() {
+  //     try {
+  //       if (id !== 0) {
+  //         const responseJela = await axios.get(`http://localhost:8080/jelovnik/${id}`);
+  //         const fetchedDataJela = responseJela.data;
+  //         fetchedDataJela.sort((a, b) => a.TIP - b.TIP);
+  //         setJela(fetchedDataJela);
+  //         console.log(jela);
+  //       }
+  //     } catch (error) {
+  //       console.error('Failed to fetch guests data:', error);
+  //     }
+  //   }
+  //   fetchJela();
+  // }, [id]);
 
   useEffect(() => {
     async function fetchImages() {
@@ -189,7 +196,7 @@ function ResotranOglasPageLogged() {
       try {
         for (const ijelo of izabranaJela) {
           console.log(ijelo);
-          await fetch(`http://localhost:8080/jelovnikzakazano/${idMl}`, {
+          await fetch(`http://localhost:5555/jelovnikzakazano/${idMl}`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -202,18 +209,24 @@ function ResotranOglasPageLogged() {
             }),
           });
         }
-        await fetch(`http://localhost:8080/zakazivanjerestorana/prekouid/${auth.currentUser.uid}`, {
-          method: 'PUT',
+
+        console.log('ASDF');
+        console.log(idMl);
+        console.log('ASDF');
+
+        await fetch('http://localhost:5555/zakazano/restoran', {
+          method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            Restoran_Termin: formattedDate,
-            Cena_Restorana: izabranaCena,
-            Restoran_ID: id,
+            mladenciID: idMl,
+            RestoranTermin: formattedDate,
+            CenaRestorana: izabranaCena,
+            RestoranID: id,
           }),
         });
-        window.location.reload();
+        // window.location.reload();
         // pozovi put za rezervaciju
       } catch (err) {
         // asdf
